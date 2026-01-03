@@ -567,119 +567,121 @@
   </div>
 
   <script>
-    <script>
-      (function () {
-      const target = new Date(2026, 1, 20, 11, 0, 0);
-      const dEl = document.getElementById('d');
-      const hEl = document.getElementById('h');
-      const mEl = document.getElementById('m');
-      const sEl = document.getElementById('s');
-      if (!dEl || !hEl || !mEl || !sEl) return;
-    
-      const pad2 = n => String(n).padStart(2,'0');
-    
-      function tick(){
-        let diff = target - new Date();
-        if (diff < 0) diff = 0;
-        const total = Math.floor(diff / 1000);
-        const days  = Math.floor(total / 86400);
-        const hours = Math.floor((total % 86400) / 3600);
-        const mins  = Math.floor((total % 3600) / 60);
-        const secs  = total % 60;
-    
-        dEl.textContent = String(days);
-        hEl.textContent = pad2(hours);
-        mEl.textContent = pad2(mins);
-        sEl.textContent = pad2(secs);
+  // Countdown (Engagement start: 20 Feb 2026, 11:00)
+  (function () {
+    const target = new Date(2026, 1, 20, 11, 0, 0); // Feb = 1
+
+    const dEl = document.getElementById('d');
+    const hEl = document.getElementById('h');
+    const mEl = document.getElementById('m');
+    const sEl = document.getElementById('s');
+
+    const pad2 = (n) => String(n).padStart(2, '0');
+
+    function tick() {
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+      if (diff < 0) diff = 0;
+
+      const total = Math.floor(diff / 1000);
+      const days  = Math.floor(total / 86400);
+      const hours = Math.floor((total % 86400) / 3600);
+      const mins  = Math.floor((total % 3600) / 60);
+      const secs  = total % 60;
+
+      dEl.textContent = String(days);
+      hEl.textContent = pad2(hours);
+      mEl.textContent = pad2(mins);
+      sEl.textContent = pad2(secs);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // RSVP logic
+  const form = document.getElementById('rsvpForm');
+  const msg = document.getElementById('formMsg');
+
+  const plusOneRadios = document.querySelectorAll('input[name="plus_one"]');
+  const plusOneBlock = document.getElementById('plusOneBlock');
+  const plusOneName = document.getElementById('plus_one_name');
+
+  plusOneRadios.forEach(r => {
+    r.addEventListener('change', () => {
+      if (r.checked && r.value === 'Yes') {
+        plusOneBlock.style.display = 'block';
+        plusOneName.required = true;
       }
-    
-      tick();
-      setInterval(tick, 1000);
-    })();
-
-    // RSVP logic
-    const form = document.getElementById('rsvpForm');
-    const msg = document.getElementById('formMsg');
-
-    const plusOneRadios = document.querySelectorAll('input[name="plus_one"]');
-    const plusOneBlock = document.getElementById('plusOneBlock');
-    const plusOneName = document.getElementById('plus_one_name');
-
-    plusOneRadios.forEach(r => {
-      r.addEventListener('change', () => {
-        if (r.checked && r.value === 'Yes') {
-          plusOneBlock.style.display = 'block';
-          plusOneName.required = true;
-        }
-        if (r.checked && r.value === 'No') {
-          plusOneBlock.style.display = 'none';
-          plusOneName.required = false;
-          plusOneName.value = '';
-        }
-      });
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const ev1 = form.querySelector('input[name="events_engagement"]').checked;
-      const ev2 = form.querySelector('input[name="events_haldi_sangeet"]').checked;
-      const ev3 = form.querySelector('input[name="events_wedding"]').checked;
-
-      if (!ev1 && !ev2 && !ev3) {
-        msg.textContent = 'Select at least one event.';
-        msg.className = 'msg bad';
-        msg.style.display = 'block';
-        return;
-      }
-
-      if (!form.checkValidity()) {
-        msg.textContent = 'Fill the required fields.';
-        msg.className = 'msg bad';
-        msg.style.display = 'block';
-        return;
-      }
-
-      const fd = new FormData(form);
-      const payload = {
-        name: (fd.get('name') || '').toString().trim(),
-        email: (fd.get('email') || '').toString().trim(),
-        phone: (fd.get('phone') || '').toString().trim(),
-        attendance_overall: fd.get('attendance_overall') || '',
-        events_engagement: ev1 ? 'Yes' : 'No',
-        events_haldi_sangeet: ev2 ? 'Yes' : 'No',
-        events_wedding: ev3 ? 'Yes' : 'No',
-        plus_one: fd.get('plus_one') || '',
-        plus_one_name: (fd.get('plus_one_name') || '').toString().trim(),
-        dietary: (fd.get('dietary') || '').toString().trim(),
-        notes: (fd.get('notes') || '').toString().trim()
-      };
-
-      try {
-        const res = await fetch('YOUR_WEB_APP_URL_HERE', {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json().catch(() => null);
-        if (!data || data.status !== 'success') throw new Error('Bad response');
-
-        msg.textContent = 'RSVP received.';
-        msg.className = 'msg ok';
-        msg.style.display = 'block';
-
-        form.reset();
+      if (r.checked && r.value === 'No') {
         plusOneBlock.style.display = 'none';
         plusOneName.required = false;
-
-      } catch (err) {
-        msg.textContent = 'Something went wrong. Please try again later.';
-        msg.className = 'msg bad';
-        msg.style.display = 'block';
+        plusOneName.value = '';
       }
     });
-  </script>
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const ev1 = form.querySelector('input[name="events_engagement"]').checked;
+    const ev2 = form.querySelector('input[name="events_haldi_sangeet"]').checked;
+    const ev3 = form.querySelector('input[name="events_wedding"]').checked;
+
+    if (!ev1 && !ev2 && !ev3) {
+      msg.textContent = 'Select at least one event.';
+      msg.className = 'msg bad';
+      msg.style.display = 'block';
+      return;
+    }
+
+    if (!form.checkValidity()) {
+      msg.textContent = 'Fill the required fields.';
+      msg.className = 'msg bad';
+      msg.style.display = 'block';
+      return;
+    }
+
+    const fd = new FormData(form);
+    const payload = {
+      name: (fd.get('name') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim(),
+      phone: (fd.get('phone') || '').toString().trim(),
+      attendance_overall: fd.get('attendance_overall') || '',
+      events_engagement: ev1 ? 'Yes' : 'No',
+      events_haldi_sangeet: ev2 ? 'Yes' : 'No',
+      events_wedding: ev3 ? 'Yes' : 'No',
+      plus_one: fd.get('plus_one') || '',
+      plus_one_name: (fd.get('plus_one_name') || '').toString().trim(),
+      dietary: (fd.get('dietary') || '').toString().trim(),
+      notes: (fd.get('notes') || '').toString().trim()
+    };
+
+    try {
+      const res = await fetch('YOUR_WEB_APP_URL_HERE', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json().catch(() => null);
+      if (!data || data.status !== 'success') throw new Error('Bad response');
+
+      msg.textContent = 'RSVP received.';
+      msg.className = 'msg ok';
+      msg.style.display = 'block';
+
+      form.reset();
+      plusOneBlock.style.display = 'none';
+      plusOneName.required = false;
+
+    } catch (err) {
+      msg.textContent = 'Something went wrong. Please try again later.';
+      msg.className = 'msg bad';
+      msg.style.display = 'block';
+    }
+  });
+</script>
 </body>
 </html>
