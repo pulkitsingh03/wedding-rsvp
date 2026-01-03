@@ -111,28 +111,44 @@
 
     
     .countdown{
-  position: relative !important;
-  top: 20px;
+  position: fixed;
+  top: 14px;
   left: 50%;
-  transform: translateX(-50%) scale(1.2);
+  transform: translateX(-50%);
+  z-index: 9999;
+
   display: flex;
-  gap: 14px;
-  width: max-content;
-  z-index: 999999;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  /* THIS prevents mobile overflow */
+  width: min(520px, calc(100vw - 24px));
   pointer-events: none;
 }
 
 .countdown div{
   text-align:center;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border: 1px solid rgba(230,195,106,.55);
   border-radius: 999px;
   background: rgba(0,0,0,.35);
   backdrop-filter: blur(6px);
+  min-width: 78px; /* keeps pills consistent */
 }
 
-.countdown span{display:block;font-size:25px;color:#e6c36a;font-weight:700;}
-.countdown small{font-size:15px;letter-spacing:1px;color:rgba(230,195,106,.85);}
+.countdown span{
+  display:block;
+  font-size: 18px;
+  color:#e6c36a;
+  font-weight:700;
+}
+
+.countdown small{
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(230,195,106,.85);
+}
 
     
     .rsvpInner{ width:min(980px, 92vw); margin:0 auto; }
@@ -497,6 +513,14 @@ body{
   }
 }
 .hero{ min-height: 100dvh; }
+html, body{
+  width: 100%;
+  overflow-x: hidden;
+}
+@media (max-width: 720px){
+  .grid2{ grid-template-columns: 1fr; }
+  .formShell{ padding: 18px 14px 20px; border-radius: 20px; }
+}
 
   </style>
 </head>
