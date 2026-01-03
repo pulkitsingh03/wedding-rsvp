@@ -111,14 +111,17 @@
 
     
     .countdown{
-      position: absolute;
-      top: 20px;
+      position: fixed;              /* KEY CHANGE */
+      top: 24px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) scale(1.2);
+    
       display: flex;
       gap: 14px;
-      z-index: 3;
+    
+      z-index: 10;
     }
+
     .countdown div{
       text-align: center;
       padding: 10px 12px;
