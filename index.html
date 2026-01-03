@@ -19,6 +19,7 @@
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
+
     body{
       margin:0;
       color:#fff;
@@ -26,7 +27,21 @@
       background: url("assets/invite-hero.webp") center / cover no-repeat fixed;
       background-color:#050814;
     }
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      pointer-events: none;
+      z-index: 0;
+    }
     
+    /* ⬇️ ADD THIS RIGHT HERE */
+    .hero, .sep, .wrap2{
+      position: relative;
+      z-index: 1;
+    }
+
     .hero{
       min-height:100vh;
       position: relative;
