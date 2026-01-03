@@ -264,37 +264,28 @@
     /* =========================
        RSVP SECTION
        ========================= */
+    /* Remove global overlay effect behind the RSVP area */
     .wrap2{
       position: relative;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 14px 56px;
     }
-    .wrap2::before{
+    
+    .wrap2::after{
       content:"";
       position:absolute;
-      inset:0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.62));
-      pointer-events:none;
-      z-index:0;
+      inset:-80px;               /* feather beyond the box */
+      background: rgba(0,0,0,.0);/* cancels the "extra dark" look */
+      z-index: 0;
     }
+    
+    /* Ensure the form stays above */
+    .formShell{ position: relative; z-index: 1; }
+    
+    /* Make the form shell a bit more readable without darkening outside */
     .formShell{
-      position: relative;
-      z-index: 1;
-      border-radius: 28px;
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(231,196,106,.14);
-      background:
-        radial-gradient(900px 600px at 15% 0%, rgba(231,196,106,.10), transparent 60%),
-        radial-gradient(700px 600px at 85% 10%, rgba(99,102,241,.10), transparent 58%),
-        rgba(255,255,255,.03);
-      backdrop-filter: blur(14px);
-      padding: 26px 16px 28px;
+      background: rgba(8,12,24,.55);
+      border: 1px solid rgba(231,196,106,.18);
     }
-    @media (min-width:760px){
-      .formShell{padding: 30px 28px 34px;}
-    }
+
 
     .formTitle{
       font-family:"Fraunces", serif;
