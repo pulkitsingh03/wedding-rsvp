@@ -2,1164 +2,550 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Wedding RSVP – Pulkit & Sakshi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pulkit & Sakshi — RSVP</title>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet"/>
 
   <style>
-    :root {
-      --bg: #12030a;
-      --bg-soft: #1e0b11;
-      --panel: #140910;
-      --panel-light: #221018;
-      --accent: #eab308;       /* warm gold */
-      --accent-soft: rgba(234, 179, 8, 0.12);
-      --accent-strong: #d97706; /* warm orange */
-      --accent-deep: #b91c1c;   /* deep red */
-      --text: #f9fafb;
-      --muted: #d1d5db;
-      --muted-soft: #9ca3af;
-      --border-subtle: rgba(248, 250, 252, 0.12);
-      --error: #f97373;
-      --radius-xl: 26px;
-      --shadow-soft: 0 28px 60px rgba(0, 0, 0, 0.85);
+    :root{
+      --bg0:#050814;
+      --text:#EEF2FF;
+      --muted:rgba(238,242,255,.74);
+      --gold:#E7C46A;
+      --gold2:#B98A2A;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background: var(--bg0);
+      overflow-x:hidden;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    
+    .hero{
+  min-height:100vh;
+  background: url("assets/invite-hero.webp") center/cover no-repeat;
+  position: relative;
+  padding: 40px 20px 80px;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.6));
+}
+.hero-overlay{ display:none; } /* kept only because markup includes it */
 
-    body {
-      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background:
-        radial-gradient(circle at top, #3b0d10 0, #12030a 45%, #05010a 100%);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
+.heroText{
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 140px auto 0;
+  text-align: center;
+  color:#fff;
+  text-shadow: 0 18px 60px rgba(0,0,0,.55);
+}
+.eyebrow{
+  color: #e6c36a;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.heroText h1{
+  font-size: clamp(48px, 6vw, 86px);
+  margin: 0 0 30px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+}
+.heroText h1 span{ color:#e6c36a; }
 
-    .page {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-    }
+.event{
+  margin: 22px 0;
+  line-height: 1.6;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 16px;
+}
+.cta{
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 22px;
+  border: 1px solid #e6c36a;
+  color: #e6c36a;
+  text-decoration: none;
+  letter-spacing: 2px;
+  border-radius: 999px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+}
 
-    /* Decorative border around whole page content */
-    .page-frame {
-      border-radius: 30px;
-      border: 2px solid rgba(234, 179, 8, 0.4);
-      box-shadow: var(--shadow-soft);
-      background:
-        radial-gradient(circle at top, rgba(248, 250, 252, 0.06), transparent 60%),
-        linear-gradient(145deg, #12030a 0%, #1f0d10 40%, #0b050f 100%);
-      overflow: hidden;
-    }
+.countdown{
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14px;
+  z-index: 3;
+}
+.countdown div{
+  text-align: center;
+  padding: 10px 12px;
+  border: 1px solid rgba(230,195,106,.5);
+  border-radius: 999px;
+  background: rgba(0,0,0,.3);
+  backdrop-filter: blur(6px);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+.countdown span{ display:block; font-size:20px; color:#e6c36a; font-weight:700; }
+.countdown small{ font-size:10px; letter-spacing:1px; color: rgba(230,195,106,.85); }
 
-    .frame-border {
-      height: 14px;
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          rgba(234, 179, 8, 0.7) 0,
-          rgba(234, 179, 8, 0.7) 14px,
-          transparent 14px,
-          transparent 22px,
-          rgba(220, 38, 38, 0.9) 22px,
-          rgba(220, 38, 38, 0.9) 30px,
-          transparent 30px,
-          transparent 38px
-        );
-      opacity: 0.45;
-    }
+.rsvpSection{ background:#070A16; padding:56px 16px 80px; }
+.rsvpInner{ width:min(980px, 92vw); margin:0 auto; }
 
-    .frame-inner {
-      padding: 20px 14px 26px;
-    }
 
-    @media (min-width: 768px) {
-      .frame-inner {
-        padding: 24px 22px 32px;
-      }
-    }
-
-    /* TOP NAV */
-    .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .kicker{
+      letter-spacing:.30em;
+      text-transform:uppercase;
       font-size: 12px;
-      margin-bottom: 16px;
-      color: var(--muted-soft);
+      color: rgba(238,242,255,.80);
+      margin-bottom: 18px;
+      text-shadow: 0 16px 60px rgba(0,0,0,.60);
     }
 
-    .nav-title {
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 11px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .names{
+      font-family:"Fraunces", serif;
+      font-size: clamp(56px, 6.2vw, 96px);
+      line-height: 1.02;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-shadow: 0 18px 70px rgba(0,0,0,.65);
+    }
+    .amp{color:var(--gold)}
+
+    .sub{
+      font-size: 16px;
+      color: rgba(238,242,255,.86);
+      line-height: 1.95;
+      max-width: 760px;
+      margin-bottom: 22px;
+      text-shadow: 0 16px 60px rgba(0,0,0,.55);
     }
 
-    .nav-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(234, 179, 8, 0.95);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 10px;
+    .meta{
+      display:flex;
+      gap: 12px 14px;
       flex-wrap: wrap;
+      align-items:center;
+      color: rgba(238,242,255,.82);
+      font-size: 13px;
+      text-shadow: 0 12px 50px rgba(0,0,0,.55);
+    }
+    .dot{
+      width:4px;height:4px;border-radius:999px;background:rgba(231,196,106,.85);
+      opacity:.9
     }
 
-    .nav-link {
-      border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.16);
-      background: rgba(15, 23, 42, 0.35);
-      padding: 5px 10px;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .nav-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* SECTION 1: HERO */
-
-    .hero {
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(248, 250, 252, 0.18);
-      background:
-        radial-gradient(circle at top, rgba(248, 250, 252, 0.06), transparent 58%),
-        linear-gradient(145deg, #1a090f 0%, #111827 55%, #020617 100%);
-      min-height: 420px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .hero-top-band {
-      height: 30px;
-      background:
-        radial-gradient(circle at top, rgba(234, 179, 8, 0.32), transparent 55%),
-        repeating-linear-gradient(
-          135deg,
-          rgba(185, 28, 28, 0.7) 0,
-          rgba(185, 28, 28, 0.7) 10px,
-          rgba(120, 53, 15, 0.7) 10px,
-          rgba(120, 53, 15, 0.7) 20px
-        );
-      opacity: 0.6;
-    }
-
-    .hero-main {
-      position: relative;
-      padding: 22px 20px 16px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    .timeline{
+      max-width: 780px;
+      margin-top: 30px;
+      display:grid;
       gap: 18px;
     }
-
-    @media (max-width: 780px) {
-      .hero-main {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 20px 18px 12px;
-      }
+    .row{
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      align-items:start;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
     }
-
-    .hero-motif {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(234, 179, 8, 0.16), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(248, 250, 252, 0.08), transparent 60%);
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    .hero-left,
-    .hero-right {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(234, 179, 8, 0.55);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .hero-tag span:nth-child(2) {
-      color: var(--accent);
-    }
-
-    .hero-names {
-      font-size: 30px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .hero-names span {
-      color: var(--accent);
-    }
-
-    .hero-line {
-      font-size: 13px;
-      color: var(--muted-soft);
-      margin-bottom: 18px;
-    }
-
-    .hero-highlight {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      background: linear-gradient(
-        90deg,
-        rgba(234, 179, 8, 0.18),
-        rgba(185, 28, 28, 0.45)
-      );
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(234, 179, 8, 0.7);
-      margin-bottom: 16px;
-    }
-
-    .hero-highlight-emoji {
-      font-size: 15px;
-    }
-
-    .hero-details-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .hero-detail-card {
-      background: rgba(15, 23, 42, 0.92);
-      border-radius: 18px;
-      padding: 10px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-    }
-
-    .detail-heading {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--muted-soft);
-      margin-bottom: 4px;
-    }
-
-    .detail-title {
-      font-weight: 500;
-      margin-bottom: 2px;
-    }
-
-    .detail-meta {
+    .row:last-child{border-bottom:0;padding-bottom:0}
+    .date{
+      letter-spacing:.20em;
+      text-transform:uppercase;
       font-size: 12px;
-      color: var(--muted-soft);
+      color: rgba(238,242,255,.74);
     }
-
-    .hero-right-card {
-      background:
-        radial-gradient(circle at top, rgba(234, 179, 8, 0.13), transparent 65%),
-        rgba(15, 23, 42, 0.95);
-      border-radius: 20px;
-      padding: 14px 14px 14px;
-      border: 1px solid rgba(234, 179, 8, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .hero-right-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .hero-right-text {
-      font-size: 12px;
-      color: var(--muted-soft);
-    }
-
-    .event-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 12px;
-      padding: 8px 9px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.88);
-      border: 1px dashed rgba(156, 163, 175, 0.7);
-    }
-
-    .event-left {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .event-title {
-      font-weight: 500;
-    }
-
-    .event-note {
-      font-size: 11px;
-      color: var(--muted-soft);
-    }
-
-    .event-right {
-      text-align: right;
-      font-size: 11px;
-      color: var(--muted-soft);
-    }
-
-    .hero-footer {
-      padding: 8px 20px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 780px) {
-      .hero-footer {
-        padding: 4px 18px 16px;
-      }
-    }
-
-    .hero-footer-text {
-      font-size: 12px;
-      color: var(--muted-soft);
-      max-width: 420px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .btn-primary {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 9px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      background-image: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      color: #111827;
-      box-shadow: 0 12px 25px rgba(234, 179, 8, 0.55);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 38px rgba(234, 179, 8, 0.7);
-      filter: brightness(1.03);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 1);
-      filter: brightness(0.97);
-    }
-
-    .btn-secondary {
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* SECTION 2: TIMELINE / INFO */
-
-    .section {
-      margin-top: 26px;
-      border-radius: 22px;
-      border: 1px solid rgba(55, 65, 81, 0.7);
-      background:
-        radial-gradient(circle at top, rgba(31, 41, 55, 0.8), transparent 65%),
-        var(--bg-soft);
-      padding: 16px 14px 18px;
-    }
-
-    @media (min-width: 768px) {
-      .section {
-        padding: 20px 20px 22px;
-      }
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
+    .title{
+      font-weight: 800;
       font-size: 16px;
-      font-weight: 600;
-    }
+      color: rgba(238,242,255,.96);
+    }  
 
-    .section-subtitle {
-      font-size: 12px;
-      color: var(--muted-soft);
-    }
-
-    .timeline {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 780px) {
-      .timeline {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .timeline-col {
-      display: flex;
-      flex-direction: column;
+    .countPill{
+      display:flex;
       gap: 10px;
-    }
-
-    .timeline-card {
-      position: relative;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      padding: 12px 12px 11px;
-      overflow: hidden;
-    }
-
-    .timeline-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(234, 179, 8, 0.22), transparent 60%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .timeline-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: baseline;
-      margin-bottom: 4px;
-    }
-
-    .timeline-name {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .timeline-tag {
-      font-size: 11px;
-      padding: 2px 8px;
+      padding: 12px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(234, 179, 8, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--accent);
-    }
-
-    .timeline-date-place {
-      font-size: 12px;
-      color: var(--muted-soft);
-      text-align: right;
-    }
-
-    .timeline-body {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .timeline-list {
-      margin-top: 4px;
-      font-size: 11px;
-      color: var(--muted-soft);
-    }
-
-    .timeline-list span {
-      margin-right: 8px;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 10px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .info-card {
-      border-radius: 16px;
-      padding: 10px 11px;
-      border: 1px dashed rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .info-title {
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 3px;
-    }
-
-    .info-pill-row {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      align-self:flex-start;
       margin-top: 6px;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
     }
-
-    .info-pill {
+    .cBox{min-width:72px;text-align:center}
+    .cNum{
+      font-family:"Fraunces", serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .cLbl{
+      margin-top: 5px;
       font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: var(--muted-soft);
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(238,242,255,.70);
     }
 
-    /* SECTION 3: RSVP FORM (SECOND PAGE FEEL) */
-
-    .form-wrapper {
-      margin-top: 30px;
-      padding-top: 26px;
-      border-top: 1px solid rgba(55, 65, 81, 0.9);
-    }
-
-    .form-section {
+    .cta{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap: wrap;
       margin-top: 12px;
-      border-radius: 24px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background:
-        radial-gradient(circle at top, rgba(24, 24, 27, 0.9), transparent 70%),
-        linear-gradient(160deg, #020617 0%, #111827 60%, #020617 100%);
-      padding: 20px 14px 24px;
     }
-
-    @media (min-width: 768px) {
-      .form-section {
-        padding: 24px 22px 26px;
-      }
-    }
-
-    .form-header-text {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .form-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .form-subtitle {
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 16px;
+      border-radius: 16px;
+      text-decoration:none;
+      font-weight: 900;
       font-size: 12px;
-      color: var(--muted-soft);
-      max-width: 360px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: #081027;
+      background: linear-gradient(135deg, rgba(231,196,106,.95), rgba(185,138,42,.92));
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.18);
     }
+    .hint{color: rgba(238,242,255,.76);font-size: 13px}
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
-    }
-
-    label {
-      font-weight: 500;
-    }
-
-    .label-sub {
-      font-weight: 400;
-      font-size: 11px;
-      color: var(--muted-soft);
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    textarea {
-      width: 100%;
-      padding: 9px 11px;
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-      background: rgba(15, 23, 42, 0.96);
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
-      transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #6b7280;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.35);
-      background: rgba(15, 23, 42, 1);
-    }
-
-    textarea {
-      min-height: 60px;
-      resize: vertical;
-    }
-
-    .row {
-      display: flex;
+    .sep{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 14px 10px;
+      display:flex;
+      align-items:center;
       gap: 12px;
-      flex-wrap: wrap;
+      color: rgba(238,242,255,.70);
+    }
+    .sep .line{height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(231,196,106,.65),transparent)}
+    .sep .txt{letter-spacing:.22em;text-transform:uppercase;font-size: 11px;white-space:nowrap}
+
+    /* =========================
+       RSVP SECTION
+       ========================= */
+    .wrap2{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 14px 56px;
     }
 
-    .row > .field-group {
-      flex: 1 1 0;
+    .formShell{
+      border-radius: 28px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(231,196,106,.14);
+      background:
+        radial-gradient(900px 600px at 15% 0%, rgba(231,196,106,.10), transparent 60%),
+        radial-gradient(700px 600px at 85% 10%, rgba(99,102,241,.10), transparent 58%),
+        rgba(255,255,255,.03);
+      backdrop-filter: blur(14px);
+      padding: 26px 16px 28px;
+    }
+    @media (min-width:760px){
+      .formShell{padding: 30px 28px 34px;}
     }
 
-    .radio-group,
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .formTitle{
+      font-family:"Fraunces", serif;
+      font-size: 34px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .formSub{
       font-size: 13px;
+      color: rgba(238,242,255,.72);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      max-width: 880px;
     }
 
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    form{max-width: 980px;}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media (max-width:720px){.grid2{grid-template-columns:1fr}}
 
-    .option input {
-      width: 16px;
-      height: 16px;
+    .field{position:relative;margin-bottom:14px}
+    .input{
+      width:100%;
+      padding: 16px 14px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+      transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
     }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
+    .input:focus{
+      border-color: rgba(231,196,106,.55);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 0 0 4px rgba(231,196,106,.14);
     }
-
-    .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: var(--muted-soft);
+    .label{
+      position:absolute;left:14px;top:12px;
+      font-size:12px;
+      color: rgba(238,242,255,.68);
+      letter-spacing:.14em;text-transform:uppercase;
+      pointer-events:none;
+      transition: transform .14s ease, opacity .14s ease;
+      opacity:.92;
     }
-
-    .submit-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 6px;
-      flex-wrap: wrap;
+    .input:focus + .label,
+    .input:not(:placeholder-shown) + .label{
+      transform: translateY(-10px) scale(.92);
+      opacity:.85;
     }
+    textarea.input{min-height:110px;resize:vertical}
+    .req{color:#ef4444}
 
-    .submit-note {
-      font-size: 11px;
-      color: var(--muted-soft);
-    }
-
-    .message {
-      margin-top: 8px;
+    .q{
+      margin: 18px 0 10px;
       font-size: 12px;
-      display: none;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(238,242,255,.70);
     }
-
-    .message.success {
-      color: #4ade80;
+    .opts{
+      display:flex;
+      gap: 12px 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
-
-    .message.error {
-      color: var(--error);
+    .chip{
+      display:flex;align-items:center;gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      cursor:pointer;
+      user-select:none;
+      transition: background .12s ease, border-color .12s ease;
+      font-size: 14px;
+      color: rgba(238,242,255,.86);
     }
+    .chip:hover{background: rgba(255,255,255,.07);border-color: rgba(255,255,255,.16)}
+    .chip input{width:16px;height:16px;accent-color:#E7C46A}
 
-    .required-asterisk {
-      color: var(--accent);
-      margin-left: 2px;
+    .submitRow{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap: wrap;
+      margin-top: 12px;
     }
+    .submitBtn{
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(231,196,106,.95), rgba(185,138,42,.92));
+      color: #081027;
+      font-weight: 900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size: 12px;
+      cursor:pointer;
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+    }
+    .submitNote{color: rgba(238,242,255,.70);font-size: 13px}
 
-    .footer-line {
+    .msg{display:none;margin-top:10px;font-size:13px}
+    .msg.ok{color:#22c55e}
+    .msg.bad{color:#ef4444}
+
+    .footer{
       margin-top: 18px;
-      font-size: 11px;
-      color: var(--muted-soft);
-      text-align: right;
+      font-size: 12px;
+      color: rgba(238,242,255,.60);
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <div class="page-frame">
-      <div class="frame-border"></div>
-      <div class="frame-inner">
-        <!-- TOP NAV -->
-        <header class="top-nav">
-          <div class="nav-title">
-            <span class="nav-dot"></span>
-            <span>Pulkit &amp; Sakshi</span>
-          </div>
-          <nav class="nav-links">
-            <a href="#top" class="nav-link">Invite</a>
-            <a href="#timeline" class="nav-link">Schedule</a>
-            <a href="#rsvp" class="nav-link">RSVP</a>
-          </nav>
-        </header>
+  <section class="hero" id="top">
+  <div class="hero-overlay"></div>
 
-        <!-- HERO SECTION -->
-        <section class="hero" id="top">
-          <div class="hero-top-band"></div>
-          <div class="hero-motif"></div>
+  <div class="countdown" aria-live="polite">
+    <div><span id="d">00</span><small>DAYS</small></div>
+    <div><span id="h">00</span><small>HRS</small></div>
+    <div><span id="m">00</span><small>MINS</small></div>
+    <div><span id="s">00</span><small>SECS</small></div>
+  </div>
 
-          <div class="hero-main">
-            <div class="hero-left">
-              <div class="hero-tag">
-                <span>Save the dates</span>
-                <span>20–22 Feb 2026</span>
-              </div>
+  <div class="heroText">
+    <div class="eyebrow">The wedding celebration of</div>
+    <h1>Pulkit <span>&</span> Sakshi</h1>
 
-              <div class="hero-names">
-                Pulkit <span>&amp;</span> Sakshi
-              </div>
-              <p class="hero-line">
-                invite you to be part of a very real, very chaotic, very Indian wedding.
-              </p>
-
-              <div class="hero-highlight">
-                <span class="hero-highlight-emoji">💃</span>
-                <span>
-                  Expect colours, noise, food, dhol, and bad dancing from people who should know better.
-                </span>
-              </div>
-
-              <div class="hero-details-grid">
-                <div class="hero-detail-card">
-                  <div class="detail-heading">Dates</div>
-                  <div class="detail-title">20 – 22 February 2026</div>
-                  <div class="detail-meta">
-                    Engagement · Haldi &amp; Sangeet · Wedding
-                  </div>
-                </div>
-                <div class="hero-detail-card">
-                  <div class="detail-heading">Cities</div>
-                  <div class="detail-title">Noida &amp; Delhi</div>
-                  <div class="detail-meta">
-                    Exact venues & timings shared closer to the dates.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="hero-right">
-              <div class="hero-right-card">
-                <div>
-                  <div class="hero-right-title">You’re on the inside list.</div>
-                  <div class="hero-right-text">
-                    This is the friends-and-chaos circle, not the formal invitation list. Use the RSVP below
-                    so we know how many of you (and your plus ones) to plan for.
-                  </div>
-                </div>
-
-                <div class="event-row">
-                  <div class="event-left">
-                    <div class="event-title">Engagement</div>
-                    <div class="event-note">20 Feb · Noida</div>
-                  </div>
-                  <div class="event-right">
-                    Rings, photos, families<br/>+ mild awkwardness.
-                  </div>
-                </div>
-
-                <div class="event-row">
-                  <div class="event-left">
-                    <div class="event-title">Haldi &amp; Sangeet</div>
-                    <div class="event-note">21 Feb · Noida</div>
-                  </div>
-                  <div class="event-right">
-                    Haldi, music, dance<br/>and all the drama.
-                  </div>
-                </div>
-
-                <div class="event-row">
-                  <div class="event-left">
-                    <div class="event-title">Wedding</div>
-                    <div class="event-note">22 Feb · Delhi</div>
-                  </div>
-                  <div class="event-right">
-                    Shaadi time.<br/>Baraat, pheras, food.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <footer class="hero-footer">
-            <div class="hero-footer-text">
-              Scroll down or hit RSVP to confirm if you’re coming, whether you’re bringing a plus one, and which
-              functions you’ll join. That helps keep the planning sane.
-            </div>
-            <div class="hero-buttons">
-              <a href="#rsvp" class="btn-primary">RSVP now</a>
-              <a href="#timeline" class="btn-secondary">View full schedule</a>
-            </div>
-          </footer>
-        </section>
-
-        <!-- TIMELINE / INFO SECTION -->
-        <section class="section" id="timeline">
-          <div class="section-header">
-            <div class="section-title">Ceremony schedule</div>
-            <div class="section-subtitle">
-              Three days. Different vibes. You can join some or all – just reflect it in your RSVP.
-            </div>
-          </div>
-
-          <div class="timeline">
-            <div class="timeline-col">
-              <article class="timeline-card">
-                <div class="timeline-inner">
-                  <div class="timeline-top">
-                    <div class="timeline-name">
-                      <span>💍 Engagement</span>
-                      <span class="timeline-tag">Day 1</span>
-                    </div>
-                    <div class="timeline-date-place">
-                      20 Feb 2026<br/>Noida
-                    </div>
-                  </div>
-                  <div class="timeline-body">
-                    Formal(ish) pictures, rings, and families doing introductions they’ve already rehearsed.
-                  </div>
-                  <div class="timeline-list">
-                    <span>• Ring ceremony</span>
-                    <span>• Family photos</span>
-                    <span>• Starters & desserts</span>
-                  </div>
-                </div>
-              </article>
-
-              <article class="timeline-card">
-                <div class="timeline-inner">
-                  <div class="timeline-top">
-                    <div class="timeline-name">
-                      <span>🌼 Haldi &amp; Sangeet</span>
-                      <span class="timeline-tag">Day 2</span>
-                    </div>
-                    <div class="timeline-date-place">
-                      21 Feb 2026<br/>Noida
-                    </div>
-                  </div>
-                  <div class="timeline-body">
-                    The “fun” day. Colour, music, choreography that may or may not be on beat.
-                  </div>
-                  <div class="timeline-list">
-                    <span>• Haldi</span>
-                    <span>• Dance & performances</span>
-                    <span>• Food + open emotional blackmail</span>
-                  </div>
-                </div>
-              </article>
-            </div>
-
-            <div class="timeline-col">
-              <article class="timeline-card">
-                <div class="timeline-inner">
-                  <div class="timeline-top">
-                    <div class="timeline-name">
-                      <span>🔥 Wedding</span>
-                      <span class="timeline-tag">Day 3</span>
-                    </div>
-                    <div class="timeline-date-place">
-                      22 Feb 2026<br/>Delhi
-                    </div>
-                  </div>
-                  <div class="timeline-body">
-                    The actual shaadi. Baraat, pheras, food coma, and that “oh, this is real now” feeling.
-                  </div>
-                  <div class="timeline-list">
-                    <span>• Baraat</span>
-                    <span>• Varmala & pheras</span>
-                    <span>• Dinner & photos</span>
-                  </div>
-                </div>
-              </article>
-
-              <div class="info-grid">
-                <div class="info-card">
-                  <div class="info-title">Vibe / dress code</div>
-                  <div>
-                    Go colourful, go comfortable, go full Indian wedding mode. Don’t stress about matching themes –
-                    just avoid turning up in office formals.
-                  </div>
-                  <div class="info-pill-row">
-                    <span class="info-pill">Bright colours</span>
-                    <span class="info-pill">Ethnic / Indo-western</span>
-                    <span class="info-pill">Comfort over perfection</span>
-                  </div>
-                </div>
-
-                <div class="info-card">
-                  <div class="info-title">RSVP logic</div>
-                  <div>
-                    Use the form below to mark the days you’ll attend and if you’re bringing a plus one.
-                    If plans change later, just message me directly.
-                  </div>
-                  <div class="info-pill-row">
-                    <span class="info-pill">Helps planning</span>
-                    <span class="info-pill">Food & seating</span>
-                    <span class="info-pill">Travel coordination</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- FORM SECTION (SECOND PAGE FEEL) -->
-        <div class="form-wrapper" id="rsvp">
-          <section class="form-section">
-            <div class="form-header-text">
-              <div class="form-title">RSVP</div>
-              <div class="form-subtitle">
-                Fill this once. Mark which events you’ll be at and if you’re bringing a plus one. This is just for planning – nothing here is “formal invite” legalese.
-              </div>
-            </div>
-
-            <form id="rsvp-form">
-              <div class="field-group">
-                <label for="name">
-                  Your full name<span class="required-asterisk">*</span>
-                </label>
-                <input id="name" name="name" type="text" placeholder="Enter your name" required />
-              </div>
-
-              <div class="row">
-                <div class="field-group">
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" placeholder="Optional, but helpful" />
-                </div>
-                <div class="field-group">
-                  <label for="phone">Phone</label>
-                  <input id="phone" name="phone" type="tel" placeholder="Optional" />
-                </div>
-              </div>
-
-              <div class="radio-group">
-                <div>
-                  <label>
-                    Will you attend the wedding overall?<span class="required-asterisk">*</span>
-                  </label>
-                  <div class="label-sub">
-                    If you’re unsure, choose “Maybe” – you can always update me later.
-                  </div>
-                </div>
-                <div class="row">
-                  <label class="option">
-                    <input type="radio" name="attendance_overall" value="Yes" required />
-                    <span>Yes, I’ll be there</span>
-                  </label>
-                  <label class="option">
-                    <input type="radio" name="attendance_overall" value="Maybe" />
-                    <span>Maybe / not sure yet</span>
-                  </label>
-                  <label class="option">
-                    <input type="radio" name="attendance_overall" value="No" />
-                    <span>Won’t be able to make it</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="checkbox-group">
-                <div>
-                  <label>
-                    Which events will you attend?<span class="required-asterisk">*</span>
-                  </label>
-                  <div class="label-sub">
-                    Tick everything you’re planning to join. This can be a best guess for now.
-                  </div>
-                </div>
-                <label class="option">
-                  <input type="checkbox" name="events_engagement" value="Engagement" />
-                  <span>Engagement · 20 Feb · Noida</span>
-                </label>
-                <label class="option">
-                  <input type="checkbox" name="events_haldi_sangeet" value="Haldi & Sangeet" />
-                  <span>Haldi &amp; Sangeet · 21 Feb · Noida</span>
-                </label>
-                <label class="option">
-                  <input type="checkbox" name="events_wedding" value="Wedding" />
-                  <span>Wedding · 22 Feb · Delhi</span>
-                </label>
-              </div>
-
-              <div class="radio-group">
-                <div>
-                  <label>
-                    Are you bringing a plus one?<span class="required-asterisk">*</span>
-                  </label>
-                  <div class="label-sub">
-                    Partner, spouse, or someone you’re bringing along with you.
-                  </div>
-                </div>
-                <div class="row">
-                  <label class="option">
-                    <input type="radio" name="plus_one" value="No" required />
-                    <span>No</span>
-                  </label>
-                  <label class="option">
-                    <input type="radio" name="plus_one" value="Yes" />
-                    <span>Yes</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="field-group" id="plus-one-details" style="display: none;">
-                <label for="plus_one_name">
-                  Plus one details<span class="required-asterisk">*</span>
-                </label>
-                <input id="plus_one_name" name="plus_one_name" type="text" placeholder="Name of your plus one" />
-                <input id="plus_one_relation" name="plus_one_relation" type="text" placeholder="How do I know them / relation (optional)" />
-              </div>
-
-              <div class="field-group">
-                <label for="dietary">Dietary preferences</label>
-                <textarea id="dietary" name="dietary" placeholder="Veg / non-veg, allergies, or anything specific."></textarea>
-              </div>
-
-              <div class="field-group">
-                <label for="notes">Anything else I should know</label>
-                <textarea id="notes" name="notes" placeholder="Travel constraints, rough arrival time, or any other notes."></textarea>
-              </div>
-
-              <div class="pill-row">
-                <div class="pill">Close friends list</div>
-                <div class="pill">Helps with planning</div>
-                <div class="pill">Flexible if plans change</div>
-              </div>
-
-              <div class="submit-row">
-                <button type="submit" class="btn-primary">Submit RSVP</button>
-                <div class="submit-note">
-                  If you need to change your response later, just message me on WhatsApp.
-                </div>
-              </div>
-
-              <div id="form-message" class="message"></div>
-
-              <div class="footer-line">
-                Thanks for taking the time to fill this.
-              </div>
-            </form>
-          </section>
-        </div>
-      </div>
-      <div class="frame-border"></div>
+    <div class="event">
+      <strong>20 FEB · 11:00 AM – 2:30 PM</strong><br>
+      Engagement<br>
+      Shaurya Banquet Hall, Sector 73, Noida
     </div>
+
+    <div class="event">
+      <strong>21 FEB · 4:00 PM onwards</strong><br>
+      Haldi & Sangeet<br>
+      Club Cascade Banquet, Cleo County, Sector 121, Noida
+    </div>
+
+    <div class="event">
+      <strong>22 FEB · 5:00 PM onwards</strong><br>
+      Wedding<br>
+      Mallu Farms, Chattarpur, Mandir Road, Delhi
+    </div>
+
+    <a href="#rsvp" class="cta">RSVP</a>
+  </div>
+</section>
+
+
+  <div class="sep">
+    <div class="line"></div>
+    <div class="txt">RSVP FORM</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="wrap2">
+    <section class="formShell" id="rsvp">
+      <div class="formTitle">RSVP</div>
+      <div class="formSub">
+        Select which events you can make it to, add plus one details if needed, and submit.
+      </div>
+
+      <form id="rsvpForm">
+        <div class="field">
+          <input class="input" id="name" name="name" type="text" placeholder=" " required />
+          <div class="label">Full name <span class="req">*</span></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <input class="input" id="email" name="email" type="email" placeholder=" " />
+            <div class="label">Email</div>
+          </div>
+          <div class="field">
+            <input class="input" id="phone" name="phone" type="tel" placeholder=" " />
+            <div class="label">Phone</div>
+          </div>
+        </div>
+
+        <div class="q">Attending overall? <span class="req">*</span></div>
+        <div class="opts">
+          <label class="chip"><input type="radio" name="attendance_overall" value="Yes" required />Yes</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="Maybe" />Maybe</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="No" />No</label>
+        </div>
+
+        <div class="q">Which events will you attend? <span class="req">*</span></div>
+        <div class="opts">
+          <label class="chip"><input type="checkbox" name="events_engagement" value="Engagement" />Engagement (20 Feb)</label>
+          <label class="chip"><input type="checkbox" name="events_haldi_sangeet" value="Haldi & Sangeet" />Haldi &amp; Sangeet (21 Feb)</label>
+          <label class="chip"><input type="checkbox" name="events_wedding" value="Wedding" />Wedding (22 Feb)</label>
+        </div>
+
+        <div class="q">Bringing a plus one? <span class="req">*</span></div>
+        <div class="opts">
+          <label class="chip"><input type="radio" name="plus_one" value="No" required />No</label>
+          <label class="chip"><input type="radio" name="plus_one" value="Yes" />Yes</label>
+        </div>
+
+        <div class="field" id="plusOneBlock" style="display:none;">
+          <input class="input" id="plus_one_name" name="plus_one_name" type="text" placeholder=" " />
+          <div class="label">Plus one name <span class="req">*</span></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <textarea class="input" id="dietary" name="dietary" placeholder=" "></textarea>
+            <div class="label">Dietary</div>
+          </div>
+          <div class="field">
+            <textarea class="input" id="notes" name="notes" placeholder=" "></textarea>
+            <div class="label">Notes</div>
+          </div>
+        </div>
+
+        <div class="submitRow">
+          <button class="submitBtn" type="submit">Submit</button>
+          <div class="submitNote">This is just for headcount planning.</div>
+        </div>
+
+        <div id="formMsg" class="msg"></div>
+        <div class="footer">Pulkit &amp; Sakshi · February 2026 · Noida &amp; Delhi</div>
+      </form>
+    </section>
   </div>
 
   <script>
-    const form = document.getElementById('rsvp-form');
-    const messageBox = document.getElementById('form-message');
+    // Countdown to 20 Feb 2026 00:00 (local time)
+    const target = new Date(2026, 1, 20, 0, 0, 0);
+    const elDays = document.getElementById('cdDays');
+    const elHours = document.getElementById('cdHours');
+    const elMins = document.getElementById('cdMins');
+    const elSecs = document.getElementById('cdSecs');
+    const pad2 = (n) => String(n).padStart(2, '0');
+
+    function tick(){
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+      if (diff < 0) diff = 0;
+
+      const s = Math.floor(diff / 1000);
+      const days = Math.floor(s / 86400);
+      const hours = Math.floor((s % 86400) / 3600);
+      const mins = Math.floor((s % 3600) / 60);
+      const secs = s % 60;
+
+      elDays.textContent = String(days);
+      elHours.textContent = pad2(hours);
+      elMins.textContent = pad2(mins);
+      elSecs.textContent = pad2(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // RSVP logic
+    const form = document.getElementById('rsvpForm');
+    const msg = document.getElementById('formMsg');
 
     const plusOneRadios = document.querySelectorAll('input[name="plus_one"]');
-    const plusOneDetails = document.getElementById('plus-one-details');
+    const plusOneBlock = document.getElementById('plusOneBlock');
     const plusOneName = document.getElementById('plus_one_name');
-    const plusOneRelation = document.getElementById('plus_one_relation');
 
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const dietaryInput = document.getElementById('dietary');
-    const notesInput = document.getElementById('notes');
-
-    plusOneRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.value === 'Yes' && radio.checked) {
-          plusOneDetails.style.display = 'flex';
-          plusOneDetails.style.flexDirection = 'column';
+    plusOneRadios.forEach(r => {
+      r.addEventListener('change', () => {
+        if (r.checked && r.value === 'Yes') {
+          plusOneBlock.style.display = 'block';
           plusOneName.required = true;
-        } else if (radio.value === 'No' && radio.checked) {
-          plusOneDetails.style.display = 'none';
+        }
+        if (r.checked && r.value === 'No') {
+          plusOneBlock.style.display = 'none';
           plusOneName.required = false;
-          plusOneRelation.required = false;
           plusOneName.value = '';
-          plusOneRelation.value = '';
         }
       });
     });
@@ -1167,57 +553,62 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      if (!form.checkValidity()) {
-        messageBox.textContent = 'Please fill in all required fields.';
-        messageBox.className = 'message error';
-        messageBox.style.display = 'block';
+      const ev1 = form.querySelector('input[name="events_engagement"]').checked;
+      const ev2 = form.querySelector('input[name="events_haldi_sangeet"]').checked;
+      const ev3 = form.querySelector('input[name="events_wedding"]').checked;
+
+      if (!ev1 && !ev2 && !ev3) {
+        msg.textContent = 'Select at least one event.';
+        msg.className = 'msg bad';
+        msg.style.display = 'block';
         return;
       }
 
-      const formData = new FormData(form);
+      if (!form.checkValidity()) {
+        msg.textContent = 'Fill the required fields.';
+        msg.className = 'msg bad';
+        msg.style.display = 'block';
+        return;
+      }
+
+      const fd = new FormData(form);
       const payload = {
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        phone: phoneInput.value.trim(),
-        attendance_overall: formData.get('attendance_overall') || '',
-        events_engagement: formData.get('events_engagement') ? 'Yes' : 'No',
-        events_haldi_sangeet: formData.get('events_haldi_sangeet') ? 'Yes' : 'No',
-        events_wedding: formData.get('events_wedding') ? 'Yes' : 'No',
-        plus_one: formData.get('plus_one') || '',
-        plus_one_name: plusOneName.value.trim(),
-        dietary: dietaryInput.value.trim(),
-        notes: notesInput.value.trim()
+        name: (fd.get('name') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        phone: (fd.get('phone') || '').toString().trim(),
+        attendance_overall: fd.get('attendance_overall') || '',
+        events_engagement: ev1 ? 'Yes' : 'No',
+        events_haldi_sangeet: ev2 ? 'Yes' : 'No',
+        events_wedding: ev3 ? 'Yes' : 'No',
+        plus_one: fd.get('plus_one') || '',
+        plus_one_name: (fd.get('plus_one_name') || '').toString().trim(),
+        dietary: (fd.get('dietary') || '').toString().trim(),
+        notes: (fd.get('notes') || '').toString().trim()
       };
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbx_ddSbF8XguT4PFhCvXONDpT34iv21tleEjB5iAUXMcjiC6j75lYUDII0AqhkP78Md/exec', {
+        const res = await fetch('YOUR_WEB_APP_URL_HERE', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
 
-        if (!res.ok) {
-          throw new Error('HTTP ' + res.status);
-        }
-
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json().catch(() => null);
+        if (!data || data.status !== 'success') throw new Error('Bad response');
 
-        if (data && data.status === 'success') {
-          messageBox.textContent = 'RSVP received. Thank you.';
-          messageBox.className = 'message success';
-          messageBox.style.display = 'block';
-          form.reset();
-          plusOneDetails.style.display = 'none';
-        } else {
-          throw new Error('Unexpected response');
-        }
+        msg.textContent = 'RSVP received.';
+        msg.className = 'msg ok';
+        msg.style.display = 'block';
+
+        form.reset();
+        plusOneBlock.style.display = 'none';
+        plusOneName.required = false;
+
       } catch (err) {
-        console.error(err);
-        messageBox.textContent = 'Something went wrong. Please try again later.';
-        messageBox.className = 'message error';
-        messageBox.style.display = 'block';
+        msg.textContent = 'Something went wrong. Please try again later.';
+        msg.className = 'msg bad';
+        msg.style.display = 'block';
       }
     });
   </script>
