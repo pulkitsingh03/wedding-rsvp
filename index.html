@@ -111,28 +111,29 @@
 
     
     .countdown{
-      position: fixed;              /* KEY CHANGE */
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%) scale(1.2);
-    
-      display: flex;
-      gap: 14px;
-    
-      z-index: 10;
-    }
+  position: fixed !important;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%) scale(1.2);
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  z-index: 999999;
+  pointer-events: none;
+}
 
-    .countdown div{
-      text-align: center;
-      padding: 10px 12px;
-      border: 1px solid rgba(230,195,106,.5);
-      border-radius: 999px;
-      background: rgba(0,0,0,.3);
-      backdrop-filter: blur(6px);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    .countdown span{ display:block; font-size:25px; color:#e6c36a; font-weight:700; }
-    .countdown small{ font-size:15px; letter-spacing:1px; color: rgba(230,195,106,.85); }
+.countdown div{
+  text-align:center;
+  padding: 10px 12px;
+  border: 1px solid rgba(230,195,106,.55);
+  border-radius: 999px;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+
+.countdown span{display:block;font-size:20px;color:#e6c36a;font-weight:700;}
+.countdown small{font-size:10px;letter-spacing:1px;color:rgba(230,195,106,.85);}
+
     
     .rsvpInner{ width:min(980px, 92vw); margin:0 auto; }
 
@@ -437,23 +438,6 @@
   position: relative;
   z-index:2;
 }
-/* FORCE countdown top-center */
-.countdown{
-  position: fixed !important;
-  top: 26px !important;
-  left: 50vw !important;
-  right: auto !important;
-  margin: 0 !important;
-
-  transform: translateX(-50%) scale(1.2) !important;
-  width: max-content !important;
-
-  display: flex !important;
-  justify-content: center !important;
-  gap: 14px !important;
-
-  z-index: 9999 !important;
-}
 
   </style>
 </head>
@@ -584,39 +568,34 @@
 
   <script>
     <script>
-  // Countdown to 20 Feb 2026 11:00 AM (local time)
-  (function(){
-    const target = new Date(2026, 1, 20, 11, 0, 0); // Feb = 1
-
-    const dEl = document.getElementById('d');
-    const hEl = document.getElementById('h');
-    const mEl = document.getElementById('m');
-    const sEl = document.getElementById('s');
-
-    if (!dEl || !hEl || !mEl || !sEl) return;
-
-    const pad2 = (n) => String(n).padStart(2, '0');
-
-    function tick(){
-      const now = new Date();
-      let diff = target.getTime() - now.getTime();
-      if (diff < 0) diff = 0;
-
-      const total = Math.floor(diff / 1000);
-      const days = Math.floor(total / 86400);
-      const hours = Math.floor((total % 86400) / 3600);
-      const mins = Math.floor((total % 3600) / 60);
-      const secs = total % 60;
-
-      dEl.textContent = String(days);
-      hEl.textContent = pad2(hours);
-      mEl.textContent = pad2(mins);
-      sEl.textContent = pad2(secs);
-    }
-
-    tick();
-    setInterval(tick, 1000);
-  })();
+      (function () {
+      const target = new Date(2026, 1, 20, 11, 0, 0);
+      const dEl = document.getElementById('d');
+      const hEl = document.getElementById('h');
+      const mEl = document.getElementById('m');
+      const sEl = document.getElementById('s');
+      if (!dEl || !hEl || !mEl || !sEl) return;
+    
+      const pad2 = n => String(n).padStart(2,'0');
+    
+      function tick(){
+        let diff = target - new Date();
+        if (diff < 0) diff = 0;
+        const total = Math.floor(diff / 1000);
+        const days  = Math.floor(total / 86400);
+        const hours = Math.floor((total % 86400) / 3600);
+        const mins  = Math.floor((total % 3600) / 60);
+        const secs  = total % 60;
+    
+        dEl.textContent = String(days);
+        hEl.textContent = pad2(hours);
+        mEl.textContent = pad2(mins);
+        sEl.textContent = pad2(secs);
+      }
+    
+      tick();
+      setInterval(tick, 1000);
+    })();
 
     // RSVP logic
     const form = document.getElementById('rsvpForm');
