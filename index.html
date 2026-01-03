@@ -113,8 +113,8 @@
       backdrop-filter: blur(6px);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
-    .countdown span{ display:block; font-size:20px; color:#e6c36a; font-weight:700; }
-    .countdown small{ font-size:10px; letter-spacing:1px; color: rgba(230,195,106,.85); }
+    .countdown span{ display:block; font-size:30px; color:#e6c36a; font-weight:700; }
+    .countdown small{ font-size:20px; letter-spacing:1px; color: rgba(230,195,106,.85); }
     
     .rsvpInner{ width:min(980px, 92vw); margin:0 auto; }
 
@@ -216,13 +216,6 @@
       color: rgba(238,242,255,.70);
     }
 
-    .cta{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
     .btn{
       display:inline-flex;
       align-items:center;
@@ -257,12 +250,22 @@
        RSVP SECTION
        ========================= */
     .wrap2{
+      position: relative;
       max-width: 1120px;
       margin: 0 auto;
       padding: 0 14px 56px;
     }
-
+    .wrap2::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.62));
+      pointer-events:none;
+      z-index:0;
+    }
     .formShell{
+      position: relative;
+      z-index: 1;
       border-radius: 28px;
       overflow:hidden;
       box-shadow: var(--shadow);
@@ -390,13 +393,6 @@
       color: rgba(238,242,255,.60);
     }
     .hero::after,
-    .rsvpSection::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.62));
-      pointer-events:none;
-    }
     
     .rsvpSection{ position:relative; }
     
@@ -424,14 +420,6 @@
   padding: 56px 16px 80px;
 }
 
-.rsvpSection::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.62));
-  pointer-events:none;
-  z-index:1;
-}
 
 .rsvpInner{
   position: relative;
@@ -489,18 +477,17 @@
   </div>
 
   <div class="wrap2">
-    <section class="formShell" id="rsvp">
+    <section class="formShell">
       <div class="formTitle">RSVP</div>
       <div class="formSub">
         Select which events you can make it to, add plus one details if needed, and submit.
       </div>
      
       <section class="rsvpSection" id="rsvp">
-      <div class="rsvpInner">
+  <div class="rsvpInner">
 
     <form id="rsvpForm">
 
-      <form id="rsvpForm">
         <div class="field">
           <input class="input" id="name" name="name" type="text" placeholder=" " required />
           <div class="label">Full name <span class="req">*</span></div>
@@ -567,12 +554,14 @@
   </div>
 
   <script>
-    // Countdown to 20 Feb 2026 00:00 (local time)
-    const target = new Date(2026, 1, 20, 0, 0, 0);
-    const elDays = document.getElementById('cdDays');
-    const elHours = document.getElementById('cdHours');
-    const elMins = document.getElementById('cdMins');
-    const elSecs = document.getElementById('cdSecs');
+    <script>
+  // Countdown to 20 Feb 2026 00:00 (local time)
+  (function(){
+    const target = new Date(2026, 1, 20, 0, 0, 0); // Feb = 1
+    const dEl = document.getElementById('d');
+    const hEl = document.getElementById('h');
+    const mEl = document.getElementById('m');
+    const sEl = document.getElementById('s');
     const pad2 = (n) => String(n).padStart(2, '0');
 
     function tick(){
@@ -580,17 +569,18 @@
       let diff = target.getTime() - now.getTime();
       if (diff < 0) diff = 0;
 
-      const s = Math.floor(diff / 1000);
-      const days = Math.floor(s / 86400);
-      const hours = Math.floor((s % 86400) / 3600);
-      const mins = Math.floor((s % 3600) / 60);
-      const secs = s % 60;
+      const total = Math.floor(diff / 1000);
+      const days = Math.floor(total / 86400);
+      const hours = Math.floor((total % 86400) / 3600);
+      const mins = Math.floor((total % 3600) / 60);
+      const secs = total % 60;
 
-      elDays.textContent = String(days);
-      elHours.textContent = pad2(hours);
-      elMins.textContent = pad2(mins);
-      elSecs.textContent = pad2(secs);
+      dEl.textContent = String(days);
+      hEl.textContent = pad2(hours);
+      mEl.textContent = pad2(mins);
+      sEl.textContent = pad2(secs);
     }
+
     tick();
     setInterval(tick, 1000);
 
