@@ -24,7 +24,7 @@
       margin:0;
       color:#fff;
       font-family: Georgia, serif;
-      background: url("assets/invite-hero.webp") center / cover no-repeat fixed;
+      background: url("assets/invite-hero.webp") center top / cover no-repeat scroll;
       background-color:#050814;
     }
     body::before{
@@ -584,13 +584,17 @@
 
   <script>
     <script>
-  // Countdown to 20 Feb 2026 00:00 (local time)
+  // Countdown to 20 Feb 2026 11:00 AM (local time)
   (function(){
-    const target = new Date(2026, 1, 20, 0, 0, 0); // Feb = 1
+    const target = new Date(2026, 1, 20, 11, 0, 0); // Feb = 1
+
     const dEl = document.getElementById('d');
     const hEl = document.getElementById('h');
     const mEl = document.getElementById('m');
     const sEl = document.getElementById('s');
+
+    if (!dEl || !hEl || !mEl || !sEl) return;
+
     const pad2 = (n) => String(n).padStart(2, '0');
 
     function tick(){
@@ -612,6 +616,7 @@
 
     tick();
     setInterval(tick, 1000);
+  })();
 
     // RSVP logic
     const form = document.getElementById('rsvpForm');
