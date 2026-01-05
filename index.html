@@ -28,12 +28,13 @@
       height: 100vh;
       z-index: -2; 
       
+      /* Ensure this image matches your uploaded asset name */
       background-image: url('assets/invite-bg-wide.jpg');
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
       
-      /* KEY CHANGE: Dim the image slightly so white text pops without a box */
+      /* Dim the image slightly so white text pops without a box */
       filter: brightness(0.65) contrast(1.1);
       
       will-change: transform, background-position;
@@ -75,12 +76,11 @@
       padding: 20px;
     }
 
-    /* KEY CHANGE: Removed the background box entirely */
+    /* No background box for Hero Text (Transparent) */
     .heroText{
       max-width: 900px;
       padding: 20px;
       background: transparent; 
-      /* Strong shadow ensures text is readable over stars */
       text-shadow: 0 4px 30px rgba(0,0,0,1); 
     }
     
@@ -90,7 +90,6 @@
     
     .event-grid { display: grid; gap: 15px; margin: 30px 0 40px; width: 100%; }
     
-    /* Event boxes are very clear glass */
     .event{ 
       padding: 16px 20px; 
       background: rgba(0,0,0,0.2); 
@@ -123,15 +122,13 @@
 
     .wrap2{ max-width: 800px; margin: 0 auto; padding: 0 20px 100px; }
     
-    /* KEY CHANGE: Transparent Form Shell */
+    /* Transparent Form Shell */
     .formShell{
-      /* Very transparent dark glass so you can see the palace */
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(231,196,106,0.25);
       border-radius: 24px;
       padding: 40px 30px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      /* Minimal blur to keep details visible */
       backdrop-filter: blur(5px);
     }
 
@@ -141,10 +138,12 @@
     .input:focus{ border-color: var(--gold); background: rgba(255,255,255,0.2); }
     .label{ position:absolute;left:16px;top:18px; font-size:14px; color: rgba(255,255,255,0.7); pointer-events:none; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
     .input:focus + .label, .input:not(:placeholder-shown) + .label{ transform: translateY(-26px); font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
-    textarea.input{min-height:120px;resize:vertical}
+    
     .field{position:relative;margin-bottom:20px}
     .submitBtn{ width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--gold); color: #050814; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; cursor:pointer; margin-top: 20px; font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 20px rgba(231,196,106,0.25); }
-    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    
+    /* Removed grid2 since we only have full width fields now */
+    
     .q{ margin: 25px 0 12px; font-size: 12px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
     .opts{ display:flex; gap: 10px; flex-wrap: wrap; }
     .chip{ padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); cursor:pointer; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
@@ -155,14 +154,14 @@
 
     .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); filter: blur(5px); }
     .reveal.active { opacity: 1; transform: translateY(0); filter: blur(0); }
-    @media screen and (max-width: 768px){ .grid2{ grid-template-columns: 1fr; } .heroText h1{ font-size: 48px; } .formShell{ padding: 30px 20px; } }
+    
+    @media screen and (max-width: 768px){ .heroText h1{ font-size: 48px; } .formShell{ padding: 30px 20px; } }
   </style>
 </head>
 
 <body>
   
   <div id="dynamic-bg"></div>
-
   <div id="firefly-container"></div>
 
   <section class="hero" id="top">
@@ -190,31 +189,39 @@
     <section class="formShell reveal" id="rsvp">
       <div class="formTitle">RSVP</div>
       <div class="formSub">We can't wait to celebrate with you. Please let us know your plans.</div>
+      
       <form id="rsvpForm">
-        <div class="field"><input class="input" id="name" name="name" type="text" placeholder=" " required /><div class="label">Full Name <span style="color:red">*</span></div></div>
-        <div class="grid2">
-          <div class="field"><input class="input" id="email" name="email" type="email" placeholder=" " /><div class="label">Email</div></div>
-          <div class="field"><input class="input" id="phone" name="phone" type="tel" placeholder=" " /><div class="label">Phone</div></div>
+        
+        <div class="field">
+          <input class="input" id="name" name="name" type="text" placeholder=" " required />
+          <div class="label">Full Name <span style="color:red">*</span></div>
         </div>
+
+        <div class="field">
+          <input class="input" id="phone" name="phone" type="tel" placeholder=" " />
+          <div class="label">Phone (Optional)</div>
+        </div>
+        
         <div class="q">Will you be attending?</div>
         <div class="opts">
           <label class="chip"><input type="radio" name="attendance_overall" value="Yes" required />Yes</label>
           <label class="chip"><input type="radio" name="attendance_overall" value="Maybe" />Maybe</label>
           <label class="chip"><input type="radio" name="attendance_overall" value="No" />No</label>
         </div>
+
         <div class="q">Which events?</div>
         <div class="opts">
           <label class="chip"><input type="checkbox" name="events_engagement" value="Engagement" />Engagement</label>
           <label class="chip"><input type="checkbox" name="events_haldi_sangeet" value="Haldi & Sangeet" />Haldi/Sangeet</label>
           <label class="chip"><input type="checkbox" name="events_wedding" value="Wedding" />Wedding</label>
         </div>
+
         <div class="q">Bringing a plus one?</div>
         <div class="opts">
           <label class="chip"><input type="radio" name="plus_one" value="No" required />No</label>
           <label class="chip"><input type="radio" name="plus_one" value="Yes" />Yes</label>
         </div>
-        <div class="field" id="plusOneBlock" style="display:none; margin-top:15px;"><input class="input" id="plus_one_name" name="plus_one_name" type="text" placeholder=" " /><div class="label">Plus One Name</div></div>
-        <div class="field" style="margin-top:20px;"><textarea class="input" id="notes" name="notes" placeholder=" "></textarea><div class="label">Dietary Restrictions / Messages</div></div>
+        
         <button class="submitBtn" type="submit">Confirm Attendance</button>
         <div id="formMsg" class="msg"></div>
         <div class="footer">Pulkit &amp; Sakshi · 2026</div>
@@ -235,9 +242,8 @@
     fireflyContainer.appendChild(fly);
   }
 
-  // 2. DYNAMIC BACKGROUND ENGINE (Pans background based on scroll)
+  // 2. DYNAMIC BACKGROUND ENGINE
   const bg = document.getElementById('dynamic-bg');
-
   window.addEventListener('scroll', () => {
     const scroll = window.scrollY;
     const height = document.body.scrollHeight - window.innerHeight;
@@ -248,7 +254,7 @@
        bg.style.transform = `translateY(${progress * -50}px)`;
        bg.style.backgroundPosition = "center top";
     } 
-    // Phone Mode: Scrollytelling (Pan to show bottom of image)
+    // Phone Mode: Scrollytelling
     else {
        bg.style.backgroundPosition = `center ${progress * 100}%`;
     }
@@ -278,30 +284,29 @@
     tick(); setInterval(tick, 1000);
   })();
 
-  // 5. FORM LOGIC
+  // 5. FORM LOGIC (Updated to remove Email/Notes/PlusOneName)
   const form = document.getElementById('rsvpForm');
   const msg = document.getElementById('formMsg');
-  const plusOneRadios = document.querySelectorAll('input[name="plus_one"]');
-  const plusOneBlock = document.getElementById('plusOneBlock');
-  plusOneRadios.forEach(r => {
-    r.addEventListener('change', () => {
-      document.getElementById('plus_one_name').required = (r.value === 'Yes');
-      plusOneBlock.style.display = (r.value === 'Yes') ? 'block' : 'none';
-    });
-  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector('.submitBtn');
     btn.textContent = 'Sending...';
+    
     // REPLACE WITH YOUR GOOGLE SCRIPT URL
     const scriptURL = 'YOUR_WEB_APP_URL_HERE';
     
     try {
       const fd = new FormData(form);
       const payload = {};
-      fd.forEach((value, key) => payload[key] = value.toString().trim());
       
-      // Explicit checkbox handling
+      // Get basic fields
+      payload.name = fd.get('name').toString().trim();
+      payload.phone = fd.get('phone').toString().trim(); // Optional
+      payload.attendance_overall = fd.get('attendance_overall');
+      payload.plus_one = fd.get('plus_one');
+
+      // Checkbox handling
       payload.events_engagement = form.querySelector('input[name="events_engagement"]').checked ? 'Yes' : 'No';
       payload.events_haldi_sangeet = form.querySelector('input[name="events_haldi_sangeet"]').checked ? 'Yes' : 'No';
       payload.events_wedding = form.querySelector('input[name="events_wedding"]').checked ? 'Yes' : 'No';
