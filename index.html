@@ -11,57 +11,53 @@
     :root{
       --gold:#E7C46A;
       --gold-dim:rgba(231,196,106,0.8);
-      /* This color matches the deep blue sky in your image */
+      /* Deep Blue matching your image sky */
       --bg-blend: #0f152e; 
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-
+    
     body{
       margin:0;
       color:#fff;
       font-family: Georgia, serif;
-      
-      /* === IMAGE CONFIGURATION === */
-      background-color: var(--bg-blend); /* Fills the sides on laptop */
-      background-image: url('assets/invite-bg.jpg'); 
-      background-repeat: no-repeat;
-      background-position: center top;
-      background-attachment: scroll; /* Ensures image scrolls with the page */
-      
-      /* MOBILE DEFAULT: Force image width to match phone width. 
-         Height adjusts automatically so nothing is squashed. */
-      background-size: 100% auto; 
-      
+      background-color: transparent; /* Body is clear to see the fixed image behind */
       overflow-x: hidden;
-      min-height: 100vh;
     }
-    
-    /* On Laptop, prevent the vertical image from getting cut off.
-       We limit the width to 600px (standard poster size) and center it.
-       The background-color fills the rest. */
-    @media (min-width: 800px) {
-      body {
-        background-size: 800px auto; /* Adjust this if you want it wider on laptop */
+
+    /* === THE MAGIC FIX === */
+    /* This creates a permanent background layer that never moves */
+    #bg-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Puts it behind everything */
+      
+      background-image: url('assets/invite-bg.jpg');
+      background-position: center bottom; /* Anchors palace to bottom */
+      background-repeat: no-repeat;
+      
+      /* MOBILE: Cover the screen fully */
+      background-size: cover; 
+      
+      /* Blending color for sides if screen is wider than image */
+      background-color: var(--bg-blend);
+    }
+
+    /* LAPTOP TWEAK: 
+       Prevent the vertical image from zooming in too much on wide screens.
+       We set it to 'contain' (fit vertically) and fill sides with blue.
+    */
+    @media (min-width: 900px) {
+      #bg-fixed {
+        background-size: auto 100%; /* Height 100%, Width auto */
+        background-position: center center;
       }
     }
 
-    /* Gradient overlay to help text readability over stars */
-    body::before{
-      content:"";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, 
-        rgba(15, 21, 46, 0.4) 0%, 
-        rgba(15, 21, 46, 0.1) 40%, 
-        rgba(15, 21, 46, 0.8) 100%);
-      pointer-events: none;
-      z-index: 0;
-      height: 100%;
-    }
-
-    /* === ANIMATIONS === */
+    /* ANIMATIONS */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -74,12 +70,12 @@
       filter: blur(0);
     }
 
+    /* LAYOUT CONTAINERS */
     .hero, .sep, .wrap2{ position: relative; z-index: 1; }
 
     .hero{
-      /* Minimum height ensures the bottom palace is visible before scrolling */
-      min-height: 80vh; 
-      padding: 120px 20px 40px;
+      min-height: 85vh; 
+      padding: 100px 20px 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -88,7 +84,8 @@
 
     .heroText{
       max-width: 900px;
-      text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      /* Add strong shadow so text pops against the starry sky */
+      text-shadow: 0 4px 20px rgba(0,0,0,0.9);
     }
     
     .eyebrow{
@@ -102,7 +99,7 @@
     }
     
     .heroText h1{
-      font-size: clamp(48px, 7vw, 82px);
+      font-size: clamp(48px, 8vw, 82px);
       margin: 0 0 40px;
       font-family: "Fraunces", serif;
       font-weight: 300;
@@ -120,12 +117,12 @@
     }
     
     .event{
-      /* Glassmorphism to let the background peep through */
+      /* Glass effect to stand out from background */
       background: rgba(15, 21, 46, 0.6);
       border: 1px solid rgba(231,196,106,0.3);
       padding: 16px 20px;
       border-radius: 12px;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
       text-align: center;
     }
 
@@ -159,7 +156,6 @@
       margin-top: 20px;
     }
 
-    /* COUNTDOWN */
     .countdown{
       display: flex;
       gap: 15px;
@@ -195,7 +191,6 @@
       font-family: 'DM Sans', sans-serif;
     }
      
-    /* SEPARATOR */
     .sep{
       max-width: 600px;
       margin: 0 auto;
@@ -208,7 +203,6 @@
     .sep .line{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
     .sep .txt{letter-spacing:2px;text-transform:uppercase;font-size: 10px; font-family: 'DM Sans', sans-serif; color: var(--gold);}
 
-    /* FORM AREA */
     .wrap2{
       max-width: 800px;
       margin: 0 auto;
@@ -216,8 +210,8 @@
     }
     
     .formShell{
-      /* Darker background for form to stand out against the palace if it overlaps */
-      background: rgba(9, 12, 26, 0.85);
+      /* Dark background so form is readable over the palace details */
+      background: rgba(9, 12, 26, 0.9);
       border: 1px solid rgba(231,196,106,0.2);
       border-radius: 24px;
       padding: 40px 30px;
@@ -337,18 +331,19 @@
 
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-    /* MOBILE TWEAKS */
     @media screen and (max-width: 768px){
       .grid2{ grid-template-columns: 1fr; }
       .heroText h1{ font-size: 48px; }
       .formShell{ padding: 30px 20px; }
-      .hero{ padding-top: 140px; } /* Push text down so it sits below chandeliers */
+      .hero{ padding-top: 140px; } 
     }
   </style>
 </head>
 
 <body>
   
+  <div id="bg-fixed"></div>
+
   <section class="hero" id="top">
     
     <div class="countdown reveal">
