@@ -114,7 +114,7 @@
   position: relative !important;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%) scale(1.2);
+  transform: translateX(-50%);
   display: flex;
   gap: 14px;
   width: max-content;
@@ -483,7 +483,7 @@
   }
 
   .countdown span{
-    font-size: 30px !important;
+    font-size: 16px !important;
   }
 
   .countdown small{
@@ -496,7 +496,124 @@
   .wrap2{ padding: 0 10px 44px !important; }
   .formShell{ padding: 18px 12px 20px !important; border-radius: 20px !important; }
 }
-    
+/* =========================
+   MOBILE RESET PACK
+   Put this at the END of CSS
+   ========================= */
+
+body{ overflow-x:hidden; }
+img, svg, video{ max-width:100%; height:auto; }
+
+/* Mobile viewport height stability */
+@media (max-width: 520px){
+  .hero{ min-height: 100svh; }  /* not 100vh */
+}
+
+/* Background: keep cover, but avoid weird “zoom/cut” behavior */
+@media (max-width: 520px){
+  body{
+    background-position: center top;
+    background-size: cover;
+  }
+}
+
+/* Hero layout + text scale */
+@media (max-width: 520px){
+  .hero{
+    padding: 24px 14px 56px;
+  }
+
+  .heroText{
+    margin: 108px auto 0;  /* reduce from 140 */
+    max-width: 92vw;
+    padding: 0 6px;
+  }
+
+  .eyebrow{
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+
+  .heroText h1{
+    font-size: clamp(38px, 10vw, 56px);
+    margin: 0 0 16px;
+  }
+
+  .event{
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .eventName{ font-size: 16px; }
+  .eventMeta{ font-size: 13px; }
+
+  .cta{
+    margin-top: 16px;
+    padding: 12px 18px;
+  }
+}
+
+/* Countdown: make it fit the phone width, wrap if needed */
+@media (max-width: 520px){
+  .countdown{
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .countdown div{
+    padding: 8px 10px;
+  }
+
+  .countdown span{
+    font-size: 18px;   /* smaller than desktop */
+  }
+
+  .countdown small{
+    font-size: 10px;
+    letter-spacing: .10em;
+  }
+}
+
+/* Form container: ensure it never exceeds viewport */
+@media (max-width: 520px){
+  .wrap2{ padding: 0 12px 48px; }
+
+  .formShell{
+    border-radius: 22px;
+    padding: 22px 14px 24px;
+  }
+
+  .formTitle{ font-size: 28px; }
+  .formSub{ font-size: 13px; }
+
+  .input{
+    border-radius: 14px;
+    padding: 14px 12px 10px;
+    font-size: 14px;
+  }
+
+  .chip{
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .submitRow{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submitBtn{
+    width: 100%;
+  }
+}
+
   </style>
 </head>
 
