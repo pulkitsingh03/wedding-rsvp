@@ -10,7 +10,6 @@
   <style>
     :root{
       --gold:#E7C46A;
-      --gold-dim:rgba(231,196,106,0.8);
       /* Deep Blue matching your image sky */
       --bg-blend: #0f152e; 
     }
@@ -22,71 +21,36 @@
       color:#fff;
       font-family: Georgia, serif;
       background-color: var(--bg-blend);
+      /* Ensure body is tall enough to allow scrolling */
+      min-height: 100vh;
       overflow-x: hidden;
-      /* We remove the background image from here to put it in a moving layer */
     }
 
-    /* === DYNAMIC BACKGROUND LAYER === */
-    /* This layer holds the image and moves at a different speed (Parallax) */
-    .parallax-bg {
+    /* === THE DYNAMIC CANVAS === */
+    /* This element stays fixed behind everything */
+    #dynamic-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 120vh; /* Taller than screen so it can move */
+      height: 100vh; /* Always fills the screen */
       z-index: -1;
       
       background-image: url('assets/invite-bg.jpg');
-      background-position: center bottom; /* Palace sits at the bottom */
       background-repeat: no-repeat;
-      background-size: 100% auto; /* Mobile: fit width */
       
-      /* Smooth out the movement */
-      will-change: transform;
-      pointer-events: none;
+      /* CRITICAL: 'cover' ensures no blank blue space ever appears */
+      background-size: cover; 
+      
+      /* Start at the TOP (Chandeliers) */
+      background-position: center 0%;
+      
+      /* Smooth out the panning movement */
+      will-change: background-position;
+      transition: background-position 0.1s linear;
     }
 
-    /* Gradient Overlay: Blends the top of the image into the blue color seamlessly */
-    .parallax-bg::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 40%; /* Only cover the top sky part */
-      background: linear-gradient(to bottom, var(--bg-blend) 20%, transparent 100%);
-    }
-
-    /* DESKTOP TWEAK: Prevent image becoming too huge */
-    @media (min-width: 900px) {
-      .parallax-bg {
-        background-size: cover; /* Fill screen nicely */
-        background-position: center bottom;
-      }
-    }
-
-    /* === FIREFLY ANIMATION === */
-    /* Adds life to the blank "sky" areas */
-    .firefly {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      background: var(--gold);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--gold);
-      opacity: 0;
-      animation: fly 10s infinite ease-in-out;
-      z-index: -1;
-    }
-    @keyframes fly {
-      0% { transform: translate(0, 0); opacity: 0; }
-      20% { opacity: 0.8; }
-      50% { transform: translate(50px, -50px); opacity: 0.4; }
-      80% { opacity: 0.8; }
-      100% { transform: translate(-20px, -100px); opacity: 0; }
-    }
-
-    /* === LAYOUT === */
+    /* === LAYOUT & TEXT === */
     .hero, .sep, .wrap2{ position: relative; z-index: 1; }
 
     .hero{
@@ -94,14 +58,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center; /* Center content in the "Sky" */
+      justify-content: center;
       text-align: center;
       padding: 20px;
     }
 
+    /* Add a subtle dark gradient behind text so it's readable over stars */
     .heroText{
       max-width: 900px;
-      text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 20px;
+      background: radial-gradient(closest-side, rgba(15, 21, 46, 0.6), transparent);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
     
     .eyebrow{
@@ -116,7 +84,7 @@
     
     .heroText h1{
       font-size: clamp(48px, 8vw, 92px);
-      margin: 0 0 40px;
+      margin: 0 0 30px;
       font-family: "Fraunces", serif;
       font-weight: 300;
       line-height: 1.1;
@@ -129,18 +97,14 @@
       gap: 15px;
       margin: 30px 0 40px;
       width: 100%;
-      max-width: 500px;
     }
     
     .event{
-      background: rgba(15, 21, 46, 0.4); /* More transparent to see stars */
-      border: 1px solid rgba(231,196,106,0.2);
       padding: 16px 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
-      transition: transform 0.3s ease;
+      border-top: 1px solid rgba(231,196,106,0.3);
+      border-bottom: 1px solid rgba(231,196,106,0.1);
+      backdrop-filter: blur(2px);
     }
-    .event:hover { transform: translateY(-5px); background: rgba(15, 21, 46, 0.6); }
 
     .eventName{
       font-family: "Fraunces", serif;
@@ -157,7 +121,7 @@
 
     .cta{
       display:inline-flex;
-      padding: 18px 36px;
+      padding: 18px 42px;
       border-radius: 999px;
       text-decoration:none;
       letter-spacing: 2px;
@@ -168,19 +132,15 @@
       background: var(--gold);
       box-shadow: 0 0 30px rgba(231,196,106,0.4);
       font-family: 'DM Sans', sans-serif;
-      transition: all 0.3s ease;
-      margin-top: 20px;
-      animation: floatBtn 4s ease-in-out infinite;
+      transition: transform 0.2s ease;
+      margin-top: 30px;
     }
-    @keyframes floatBtn {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
+    .cta:active { transform: scale(0.95); }
 
     .countdown{
       display: flex;
       gap: 15px;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -193,7 +153,7 @@
       justify-content: center;
       border-radius: 8px;
       background: rgba(255,255,255,0.05);
-      border-top: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
       backdrop-filter: blur(4px);
     }
     .countdown span{
@@ -219,7 +179,7 @@
       display:flex;
       align-items:center;
       gap: 15px;
-      opacity: 0.7;
+      opacity: 0.8;
     }
     .sep .line{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
     .sep .txt{letter-spacing:2px;text-transform:uppercase;font-size: 10px; font-family: 'DM Sans', sans-serif; color: var(--gold);}
@@ -227,16 +187,17 @@
     .wrap2{
       max-width: 800px;
       margin: 0 auto;
-      padding: 0 20px 100px; /* Extra padding at bottom to see palace */
+      padding: 0 20px 100px; /* Space at bottom */
     }
     
     .formShell{
-      background: rgba(9, 12, 26, 0.85);
+      /* Glassmorphism panel for the RSVP */
+      background: rgba(9, 12, 26, 0.8);
       border: 1px solid rgba(231,196,106,0.25);
       border-radius: 24px;
       padding: 40px 30px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-      backdrop-filter: blur(12px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      backdrop-filter: blur(16px);
     }
 
     .formTitle{ font-family:"Fraunces", serif; font-size: 32px; color: #fff; margin-bottom: 10px; text-align: center; }
@@ -259,7 +220,7 @@
     .footer{ text-align: center; margin-top: 40px; font-size: 12px; color: rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif; }
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-    /* SCROLL ANIMATIONS */
+    /* ANIMATIONS */
     .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); filter: blur(5px); }
     .reveal.active { opacity: 1; transform: translateY(0); filter: blur(0); }
 
@@ -273,12 +234,7 @@
 
 <body>
   
-  <div class="parallax-bg" id="bgLayer"></div>
-
-  <div class="firefly" style="top: 20%; left: 10%; animation-duration: 8s;"></div>
-  <div class="firefly" style="top: 40%; left: 80%; animation-duration: 12s;"></div>
-  <div class="firefly" style="top: 70%; left: 30%; animation-duration: 15s;"></div>
-  <div class="firefly" style="top: 10%; left: 60%; animation-duration: 9s;"></div>
+  <div id="dynamic-bg"></div>
 
   <section class="hero" id="top">
     
@@ -384,14 +340,24 @@
   </div>
 
 <script>
-  // 1. DYNAMIC PARALLAX SCRIPT (This makes the image move!)
-  const bg = document.getElementById('bgLayer');
+  // 1. THE DYNAMIC PAN (SCROLLYTELLING)
+  // This logic pans the background from Top (0%) to Bottom (100%) based on scroll
+  const bg = document.getElementById('dynamic-bg');
+  
   window.addEventListener('scroll', () => {
-    // Only animate on larger screens to save mobile battery
-    // Calculate how far we've scrolled
-    const scroll = window.scrollY;
-    // Move the background UP slowly (0.3 speed) as we scroll down
-    bg.style.transform = `translateY(-${scroll * 0.2}px)`;
+    // Calculate how far down the page we are (0 to 1)
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    let scrollPercent = scrollTop / docHeight;
+    
+    // Clamp between 0 and 1
+    if (scrollPercent < 0) scrollPercent = 0;
+    if (scrollPercent > 1) scrollPercent = 1;
+
+    // Move the background position Y value
+    // 0% = Top (Chandeliers)
+    // 100% = Bottom (Palace)
+    bg.style.backgroundPosition = `center ${scrollPercent * 100}%`;
   });
 
   // 2. SCROLL REVEAL ANIMATIONS
