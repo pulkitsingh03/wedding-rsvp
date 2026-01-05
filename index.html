@@ -19,26 +19,27 @@
       overflow-x: hidden;
     }
 
-    /* === 1. THE MOVING BACKGROUND (The "Camera Pan") === */
+    /* === 1. THE MOVING BACKGROUND === */
     #dynamic-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      z-index: -2; /* Behind everything */
+      z-index: -2; 
       
+      /* MAKE SURE YOUR IMAGE IS NAMED EXACTLY THIS IN THE ASSETS FOLDER */
       background-image: url('assets/invite-bg-wide.jpg');
+      
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
       
       will-change: transform, background-position;
-      /* This transition creates the "Momentum" feel */
       transition: background-position 0.1s linear, transform 0.1s linear;
     }
 
-    /* === 2. THE FIREFLIES (The "Alive" Layer) === */
+    /* === 2. THE FIREFLIES === */
     .firefly {
       position: fixed;
       left: 50%;
@@ -50,7 +51,7 @@
       box-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold);
       animation: drift 20s infinite linear;
       opacity: 0;
-      z-index: -1; /* In front of background, behind text */
+      z-index: -1; 
       pointer-events: none;
     }
     
@@ -96,7 +97,6 @@
       letter-spacing: 2px; text-transform: uppercase; font-weight: 700; font-size: 13px;
       color: #050814; background: var(--gold); box-shadow: 0 0 30px rgba(231,196,106,0.4);
       font-family: 'DM Sans', sans-serif; transition: transform 0.2s ease; margin-top: 30px;
-      /* Pulse animation to make button look alive */
       animation: pulseBtn 3s infinite ease-in-out;
     }
     @keyframes pulseBtn { 0%, 100% { box-shadow: 0 0 30px rgba(231,196,106,0.4); } 50% { box-shadow: 0 0 50px rgba(231,196,106,0.7); } }
@@ -201,36 +201,32 @@
 
 <script>
   // 1. GENERATE FIREFLIES
-  // This creates 15 random particles that float around the screen
   const fireflyContainer = document.getElementById('firefly-container');
   for (let i = 0; i < 15; i++) {
     const fly = document.createElement('div');
     fly.className = 'firefly';
-    // Random positions and speeds
     fly.style.left = Math.random() * 100 + 'vw';
     fly.style.top = Math.random() * 100 + 'vh';
-    fly.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10s to 20s
+    fly.style.animationDuration = (Math.random() * 10 + 10) + 's';
     fly.style.animationDelay = (Math.random() * 5) + 's';
     fireflyContainer.appendChild(fly);
   }
 
-  // 2. DYNAMIC BACKGROUND ENGINE
+  // 2. DYNAMIC BACKGROUND ENGINE (Pans background based on scroll)
   const bg = document.getElementById('dynamic-bg');
 
   window.addEventListener('scroll', () => {
     const scroll = window.scrollY;
-    // Calculate how much of the page is scrolled (0 to 1)
     const height = document.body.scrollHeight - window.innerHeight;
     const progress = Math.min(scroll / height, 1);
     
-    // Laptop Mode: Parallax (Image moves slightly slower than text)
+    // Laptop Mode: Parallax
     if (window.innerWidth > window.innerHeight) {
        bg.style.transform = `translateY(${progress * -50}px)`;
        bg.style.backgroundPosition = "center top";
     } 
-    // Phone Mode: "Scrollytelling" (Image pans from Stars to Palace)
+    // Phone Mode: Scrollytelling (Pan to show bottom of image)
     else {
-       // We force the image to PAN down as you scroll
        bg.style.backgroundPosition = `center ${progress * 100}%`;
     }
   });
@@ -274,8 +270,38 @@
     e.preventDefault();
     const btn = form.querySelector('.submitBtn');
     btn.textContent = 'Sending...';
-    // Add real submit logic here...
-    setTimeout(() => { msg.className='msg ok'; msg.textContent='RSVP Sent!'; msg.style.display='block'; btn.textContent='Sent'; }, 1500);
+    // REPLACE WITH YOUR GOOGLE SCRIPT URL
+    const scriptURL = 'YOUR_WEB_APP_URL_HERE';
+    
+    try {
+      const fd = new FormData(form);
+      const payload = {};
+      fd.forEach((value, key) => payload[key] = value.toString().trim());
+      
+      // Explicit checkbox handling
+      payload.events_engagement = form.querySelector('input[name="events_engagement"]').checked ? 'Yes' : 'No';
+      payload.events_haldi_sangeet = form.querySelector('input[name="events_haldi_sangeet"]').checked ? 'Yes' : 'No';
+      payload.events_wedding = form.querySelector('input[name="events_wedding"]').checked ? 'Yes' : 'No';
+
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      
+      msg.className='msg ok'; 
+      msg.textContent='RSVP Sent! Thank you.'; 
+      msg.style.display='block'; 
+      btn.textContent='Sent';
+      form.reset();
+      
+    } catch (err) {
+      console.error(err);
+      msg.className='msg bad'; 
+      msg.textContent='Error sending. Please try again.'; 
+      msg.style.display='block';
+      btn.textContent='Try Again';
+    }
   });
 </script>
 </body>
