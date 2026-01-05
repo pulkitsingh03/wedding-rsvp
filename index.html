@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pulkit & Sakshi — RSVP</title>
+  <title>Pulkit & Sakshi — The Wedding</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,600&display=swap" rel="stylesheet"/>
 
   <style>
@@ -15,7 +15,6 @@
       color:#fff;
       font-family: Georgia, serif;
       background-color: var(--bg-blend);
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
@@ -28,20 +27,19 @@
       height: 100vh;
       z-index: -2; 
       
-      /* Ensure this image matches your uploaded asset name */
       background-image: url('assets/invite-bg-wide.jpg');
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
       
-      /* Dim the image slightly so white text pops without a box */
+      /* Dimmed for readability */
       filter: brightness(0.65) contrast(1.1);
       
       will-change: transform, background-position;
       transition: background-position 0.1s linear, transform 0.1s linear;
     }
 
-    /* === 2. THE FIREFLIES === */
+    /* === 2. FIREFLIES === */
     .firefly {
       position: fixed;
       left: 50%;
@@ -63,66 +61,145 @@
       100% { transform: translate(100px, -200px) scale(0); opacity: 0; }
     }
 
-    /* === LAYOUT STYLES === */
-    .hero, .sep, .wrap2{ position: relative; z-index: 1; }
-
-    .hero{
-      min-height: 100vh;
+    /* === GENERAL LAYOUT === */
+    section {
+      min-height: 100vh; /* Each section is at least a full screen */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 20px;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* No background box for Hero Text (Transparent) */
-    .heroText{
-      max-width: 900px;
-      padding: 20px;
-      background: transparent; 
-      text-shadow: 0 4px 30px rgba(0,0,0,1); 
+    /* === TYPOGRAPHY === */
+    h1 {
+      font-size: clamp(60px, 12vw, 120px);
+      margin: 0;
+      font-family: "Fraunces", serif;
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+      text-shadow: 0 4px 30px rgba(0,0,0,1);
+    }
+    h1 span { color:var(--gold); font-style: italic; }
+    
+    .eyebrow {
+      color: var(--gold);
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    /* === PAGE 1: HERO === */
+    .hero-content {
+      animation: fadeIn 1.5s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
+
+    /* === PAGE 2: ITINERARY === */
+    .section-title {
+      font-family: "Fraunces", serif;
+      font-size: 42px;
+      color: var(--gold);
+      margin-bottom: 60px;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 15px auto 0;
+      opacity: 0.6;
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .event-card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(231,196,106,0.2);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .event-card:hover {
+      transform: scale(1.02);
+      background: rgba(0,0,0,0.4);
+      border-color: rgba(231,196,106,0.4);
+    }
+
+    .ev-name {
+      font-family: "Fraunces", serif;
+      font-size: 32px; /* Much Larger */
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .ev-time {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .ev-loc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
     }
     
-    .eyebrow{ color: var(--gold); letter-spacing: 3px; margin-bottom: 16px; font-size: 13px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 600; }
-    .heroText h1{ font-size: clamp(48px, 8vw, 92px); margin: 0 0 30px; font-family: "Fraunces", serif; font-weight: 300; line-height: 1.1; color: #fff; }
-    .heroText h1 span{ color:var(--gold); font-style: italic; }
-    
-    .event-grid { display: grid; gap: 15px; margin: 30px 0 40px; width: 100%; }
-    
-    .event{ 
-      padding: 16px 20px; 
-      background: rgba(0,0,0,0.2); 
-      border-top: 1px solid rgba(231,196,106,0.3); 
-      border-bottom: 1px solid rgba(231,196,106,0.1); 
-      border-radius: 12px;
-      backdrop-filter: blur(2px); 
+    /* Map Link Styling */
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s;
     }
-    
-    .eventName{ font-family: "Fraunces", serif; font-size: 20px; color: var(--gold); margin-bottom: 4px; }
-    .eventMeta{ font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(238,242,255,0.95); line-height: 1.5; font-weight: 500; }
-
-    .cta{
-      display:inline-flex; padding: 18px 42px; border-radius: 999px; text-decoration:none;
-      letter-spacing: 2px; text-transform: uppercase; font-weight: 700; font-size: 13px;
-      color: #050814; background: var(--gold); box-shadow: 0 0 30px rgba(231,196,106,0.4);
-      font-family: 'DM Sans', sans-serif; transition: transform 0.2s ease; margin-top: 30px;
-      animation: pulseBtn 3s infinite ease-in-out;
+    .map-link:hover {
+      border-bottom-color: var(--gold);
+      opacity: 0.8;
     }
-    @keyframes pulseBtn { 0%, 100% { box-shadow: 0 0 30px rgba(231,196,106,0.4); } 50% { box-shadow: 0 0 50px rgba(231,196,106,0.7); } }
+    .map-icon { width: 14px; height: 14px; fill: currentColor; }
 
-    .countdown{ display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-    .countdown div{ text-align:center; width: 60px; height: 65px; display: flex; flex-direction: column; justify-content: center; border-radius: 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
-    .countdown span{ font-size: 24px; color: #fff; font-weight: 600; font-family: 'DM Sans', sans-serif; line-height: 1; margin-bottom: 4px; }
-    .countdown small{ font-size: 9px; letter-spacing:1px; color: var(--gold); text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
-    
-    .sep{ max-width: 600px; margin: 0 auto; padding: 40px 20px; display:flex; align-items:center; gap: 15px; opacity: 0.8; }
-    .sep .line{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-    .sep .txt{letter-spacing:2px;text-transform:uppercase;font-size: 10px; font-family: 'DM Sans', sans-serif; color: var(--gold);}
-
-    .wrap2{ max-width: 800px; margin: 0 auto; padding: 0 20px 100px; }
-    
-    /* Transparent Form Shell */
+    /* === PAGE 3: RSVP === */
     .formShell{
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(231,196,106,0.25);
@@ -130,32 +207,47 @@
       padding: 40px 30px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       backdrop-filter: blur(5px);
+      width: 100%;
+      max-width: 600px;
     }
 
-    .formTitle{ font-family:"Fraunces", serif; font-size: 32px; color: #fff; margin-bottom: 10px; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-    .formSub{ text-align: center; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 14px; }
-    .input{ width:100%; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); color: #fff; outline:none; font-size: 16px; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
+    .formTitle{ font-family:"Fraunces", serif; font-size: 38px; color: #fff; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .formSub{ color: rgba(255,255,255,0.8); margin-bottom: 30px; font-family: 'DM Sans', sans-serif; font-size: 15px;}
+    
+    /* Form Inputs */
+    .input{ width:100%; padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); color: #fff; outline:none; font-size: 16px; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
     .input:focus{ border-color: var(--gold); background: rgba(255,255,255,0.2); }
-    .label{ position:absolute;left:16px;top:18px; font-size:14px; color: rgba(255,255,255,0.7); pointer-events:none; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
-    .input:focus + .label, .input:not(:placeholder-shown) + .label{ transform: translateY(-26px); font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
-    
-    .field{position:relative;margin-bottom:20px}
-    .submitBtn{ width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--gold); color: #050814; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; cursor:pointer; margin-top: 20px; font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 20px rgba(231,196,106,0.25); }
-    
-    /* Removed grid2 since we only have full width fields now */
-    
-    .q{ margin: 25px 0 12px; font-size: 12px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-    .opts{ display:flex; gap: 10px; flex-wrap: wrap; }
-    .chip{ padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); cursor:pointer; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
-    .chip:hover{ background: rgba(255,255,255,0.1); }
-    .chip input { accent-color: var(--gold); width: 16px; height: 16px; }
-    .msg{display:none;margin-top:15px;text-align: center; font-family: 'DM Sans', sans-serif;} .msg.ok{color:#4ade80} .msg.bad{color:#f87171}
-    .footer{ text-align: center; margin-top: 40px; font-size: 12px; color: rgba(255,255,255,0.6); font-family: 'DM Sans', sans-serif; }
+    .field{position:relative;margin-bottom:24px}
+    .label{ position:absolute;left:18px;top:20px; font-size:15px; color: rgba(255,255,255,0.7); pointer-events:none; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
+    .input:focus + .label, .input:not(:placeholder-shown) + .label{ transform: translateY(-30px); font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
 
+    .q{ margin: 25px 0 12px; font-size: 13px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 700; text-align: left; }
+    .opts{ display:flex; gap: 10px; flex-wrap: wrap; }
+    .chip{ padding: 12px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); cursor:pointer; font-size: 15px; color: #fff; display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+    .chip:hover{ background: rgba(255,255,255,0.1); }
+    .chip input { accent-color: var(--gold); width: 18px; height: 18px; }
+
+    .submitBtn{ width: 100%; padding: 20px; border-radius: 14px; border: none; background: var(--gold); color: #050814; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; cursor:pointer; margin-top: 30px; font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 20px rgba(231,196,106,0.25); }
+    .msg{display:none;margin-top:15px;text-align: center; font-family: 'DM Sans', sans-serif;} .msg.ok{color:#4ade80} .msg.bad{color:#f87171}
+    
+    .footer{ margin-top: 60px; font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'DM Sans', sans-serif; padding-bottom: 20px; }
+
+    /* COUNTDOWN (Styled to fit under title) */
+    .countdown{ display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+    .countdown div{ text-align:center; min-width: 70px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
+    .countdown span{ font-size: 28px; color: #fff; font-weight: 600; font-family: 'DM Sans', sans-serif; display: block; margin-bottom: 5px; }
+    .countdown small{ font-size: 10px; letter-spacing:2px; color: var(--gold); text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+
+    /* Animations */
     .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); filter: blur(5px); }
     .reveal.active { opacity: 1; transform: translateY(0); filter: blur(0); }
-    
-    @media screen and (max-width: 768px){ .heroText h1{ font-size: 48px; } .formShell{ padding: 30px 20px; } }
+
+    @media screen and (max-width: 768px){ 
+      h1 { font-size: 60px; }
+      .section-title { font-size: 32px; }
+      .ev-name { font-size: 24px; }
+      .formShell { padding: 30px 20px; }
+    }
   </style>
 </head>
 
@@ -164,34 +256,67 @@
   <div id="dynamic-bg"></div>
   <div id="firefly-container"></div>
 
-  <section class="hero" id="top">
-    <div class="countdown reveal">
-      <div><span id="d">00</span><small>DAYS</small></div>
-      <div><span id="h">00</span><small>HRS</small></div>
-      <div><span id="m">00</span><small>MINS</small></div>
-      <div><span id="s">00</span><small>SECS</small></div>
-    </div>
-    <div class="heroText reveal">
+  <section id="home">
+    <div class="hero-content">
       <div class="eyebrow">The wedding celebration of</div>
       <h1>Pulkit <span>&</span> Sakshi</h1>
-      <div class="event-grid">
-        <div class="event"><div class="eventName">Engagement</div><div class="eventMeta">20 Feb · 11:00 AM · Shaurya Banquet</div></div>
-        <div class="event"><div class="eventName">Haldi &amp; Sangeet</div><div class="eventMeta">21 Feb · 4:00 PM · Club Cascade</div></div>
-        <div class="event"><div class="eventName">Wedding</div><div class="eventMeta">22 Feb · 5:00 PM · Mallu Farms</div></div>
+      
+      <div class="countdown">
+        <div><span id="d">00</span><small>DAYS</small></div>
+        <div><span id="h">00</span><small>HRS</small></div>
+        <div><span id="m">00</span><small>MINS</small></div>
+        <div><span id="s">00</span><small>SECS</small></div>
       </div>
-      <a href="#rsvp" class="cta">RSVP Now</a>
+    </div>
+    <div class="scroll-hint">Scroll to Explore</div>
+  </section>
+
+  <section id="events">
+    <div class="reveal">
+      <h2 class="section-title">The Events</h2>
+      
+      <div class="event-list">
+        
+        <div class="event-card">
+          <div class="ev-name">Engagement</div>
+          <div class="ev-time">Feb 20 · 11:00 AM</div>
+          <div class="ev-loc">Shaurya Banquet Hall, Sector 73, Noida</div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Shaurya+Banquet+Hall+Sector+73+Noida" target="_blank" class="map-link">
+            <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            View Map
+          </a>
+        </div>
+
+        <div class="event-card">
+          <div class="ev-name">Haldi &amp; Sangeet</div>
+          <div class="ev-time">Feb 21 · 4:00 PM</div>
+          <div class="ev-loc">Club Cascade Banquet, Cleo County, Noida</div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Club+Cascade+Banquet+Cleo+County+Noida" target="_blank" class="map-link">
+            <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            View Map
+          </a>
+        </div>
+
+        <div class="event-card">
+          <div class="ev-name">The Wedding</div>
+          <div class="ev-time">Feb 22 · 5:00 PM</div>
+          <div class="ev-loc">Mallu Farms, Chattarpur, Delhi</div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Mallu+Farms+Chattarpur+Delhi" target="_blank" class="map-link">
+            <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            View Map
+          </a>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <div class="sep reveal"><div class="line"></div><div class="txt">KINDLY REPLY</div><div class="line"></div></div>
-
-  <div class="wrap2">
-    <section class="formShell reveal" id="rsvp">
+  <section id="rsvp">
+    <div class="formShell reveal">
       <div class="formTitle">RSVP</div>
-      <div class="formSub">We can't wait to celebrate with you. Please let us know your plans.</div>
+      <div class="formSub">Kindly reply by January 31st</div>
       
       <form id="rsvpForm">
-        
         <div class="field">
           <input class="input" id="name" name="name" type="text" placeholder=" " required />
           <div class="label">Full Name <span style="color:red">*</span></div>
@@ -199,17 +324,17 @@
 
         <div class="field">
           <input class="input" id="phone" name="phone" type="tel" placeholder=" " />
-          <div class="label">Phone (Optional)</div>
+          <div class="label">Phone Number (Optional)</div>
         </div>
         
         <div class="q">Will you be attending?</div>
         <div class="opts">
-          <label class="chip"><input type="radio" name="attendance_overall" value="Yes" required />Yes</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="Yes" required />Yes, joyfully!</label>
           <label class="chip"><input type="radio" name="attendance_overall" value="Maybe" />Maybe</label>
-          <label class="chip"><input type="radio" name="attendance_overall" value="No" />No</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="No" />Regretfully no</label>
         </div>
 
-        <div class="q">Which events?</div>
+        <div class="q">Events attending?</div>
         <div class="opts">
           <label class="chip"><input type="checkbox" name="events_engagement" value="Engagement" />Engagement</label>
           <label class="chip"><input type="checkbox" name="events_haldi_sangeet" value="Haldi & Sangeet" />Haldi/Sangeet</label>
@@ -224,43 +349,43 @@
         
         <button class="submitBtn" type="submit">Confirm Attendance</button>
         <div id="formMsg" class="msg"></div>
-        <div class="footer">Pulkit &amp; Sakshi · 2026</div>
       </form>
-    </section>
-  </div>
+    </div>
+    
+    <div class="footer">Pulkit &amp; Sakshi · 2026</div>
+  </section>
 
 <script>
   // 1. GENERATE FIREFLIES
   const fireflyContainer = document.getElementById('firefly-container');
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 20; i++) {
     const fly = document.createElement('div');
     fly.className = 'firefly';
     fly.style.left = Math.random() * 100 + 'vw';
     fly.style.top = Math.random() * 100 + 'vh';
-    fly.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    fly.style.animationDuration = (Math.random() * 10 + 15) + 's';
     fly.style.animationDelay = (Math.random() * 5) + 's';
     fireflyContainer.appendChild(fly);
   }
 
-  // 2. DYNAMIC BACKGROUND ENGINE
+  // 2. DYNAMIC BACKGROUND
   const bg = document.getElementById('dynamic-bg');
   window.addEventListener('scroll', () => {
     const scroll = window.scrollY;
     const height = document.body.scrollHeight - window.innerHeight;
     const progress = Math.min(scroll / height, 1);
     
-    // Laptop Mode: Parallax
     if (window.innerWidth > window.innerHeight) {
+       // Laptop: Subtle Parallax
        bg.style.transform = `translateY(${progress * -50}px)`;
        bg.style.backgroundPosition = "center top";
-    } 
-    // Phone Mode: Scrollytelling
-    else {
+    } else {
+       // Mobile: Pan from Top to Bottom
        bg.style.backgroundPosition = `center ${progress * 100}%`;
     }
   });
 
-  // 3. ANIMATION OBSERVER
+  // 3. REVEAL ANIMATIONS
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
   }, { threshold: 0.1 });
@@ -284,7 +409,7 @@
     tick(); setInterval(tick, 1000);
   })();
 
-  // 5. FORM LOGIC (Updated to remove Email/Notes/PlusOneName)
+  // 5. FORM SUBMISSION
   const form = document.getElementById('rsvpForm');
   const msg = document.getElementById('formMsg');
 
@@ -293,32 +418,30 @@
     const btn = form.querySelector('.submitBtn');
     btn.textContent = 'Sending...';
     
-    // REPLACE WITH YOUR GOOGLE SCRIPT URL
+    // !!! REPLACE THIS WITH YOUR GOOGLE SCRIPT URL !!!
     const scriptURL = 'https://script.google.com/macros/s/AKfycbx_ddSbF8XguT4PFhCvXONDpT34iv21tleEjB5iAUXMcjiC6j75lYUDII0AqhkP78Md/exec';
     
     try {
       const fd = new FormData(form);
       const payload = {};
       
-      // Get basic fields
       payload.name = fd.get('name').toString().trim();
-      payload.phone = fd.get('phone').toString().trim(); // Optional
+      payload.phone = fd.get('phone').toString().trim();
       payload.attendance_overall = fd.get('attendance_overall');
       payload.plus_one = fd.get('plus_one');
 
-      // Checkbox handling
       payload.events_engagement = form.querySelector('input[name="events_engagement"]').checked ? 'Yes' : 'No';
       payload.events_haldi_sangeet = form.querySelector('input[name="events_haldi_sangeet"]').checked ? 'Yes' : 'No';
       payload.events_wedding = form.querySelector('input[name="events_wedding"]').checked ? 'Yes' : 'No';
 
-      const res = await fetch(scriptURL, {
+      await fetch(scriptURL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
       
       msg.className='msg ok'; 
-      msg.textContent='RSVP Sent! Thank you.'; 
+      msg.textContent='RSVP Received! Thank you.'; 
       msg.style.display='block'; 
       btn.textContent='Sent';
       form.reset();
@@ -326,7 +449,7 @@
     } catch (err) {
       console.error(err);
       msg.className='msg bad'; 
-      msg.textContent='Error sending. Please try again.'; 
+      msg.textContent='Error. Please check connection.'; 
       msg.style.display='block';
       btn.textContent='Try Again';
     }
