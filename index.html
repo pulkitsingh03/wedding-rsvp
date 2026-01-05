@@ -28,12 +28,13 @@
       height: 100vh;
       z-index: -2; 
       
-      /* MAKE SURE YOUR IMAGE IS NAMED EXACTLY THIS IN THE ASSETS FOLDER */
       background-image: url('assets/invite-bg-wide.jpg');
-      
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
+      
+      /* KEY CHANGE: Dim the image slightly so white text pops without a box */
+      filter: brightness(0.65) contrast(1.1);
       
       will-change: transform, background-position;
       transition: background-position 0.1s linear, transform 0.1s linear;
@@ -54,7 +55,6 @@
       z-index: -1; 
       pointer-events: none;
     }
-    
     @keyframes drift {
       0% { transform: translate(0, 0) scale(1); opacity: 0; }
       20% { opacity: 0.8; }
@@ -75,16 +75,13 @@
       padding: 20px;
     }
 
-    /* --- UPDATED FOR BETTER READABILITY --- */
+    /* KEY CHANGE: Removed the background box entirely */
     .heroText{
       max-width: 900px;
-      padding: 50px; /* Increased padding slightly */
-      border-radius: 30px;
-      /* Much darker and stronger gradient background */
-      background: radial-gradient(closest-side, rgba(5, 8, 20, 0.85), transparent);
-      /* Stronger blur to wash out the image behind the text */
-      backdrop-filter: blur(10px);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      padding: 20px;
+      background: transparent; 
+      /* Strong shadow ensures text is readable over stars */
+      text-shadow: 0 4px 30px rgba(0,0,0,1); 
     }
     
     .eyebrow{ color: var(--gold); letter-spacing: 3px; margin-bottom: 16px; font-size: 13px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 600; }
@@ -92,10 +89,19 @@
     .heroText h1 span{ color:var(--gold); font-style: italic; }
     
     .event-grid { display: grid; gap: 15px; margin: 30px 0 40px; width: 100%; }
-    /* Darker backgrounds for event boxes */
-    .event{ padding: 16px 20px; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(231,196,106,0.3); border-bottom: 1px solid rgba(231,196,106,0.1); backdrop-filter: blur(5px); border-radius: 12px; }
+    
+    /* Event boxes are very clear glass */
+    .event{ 
+      padding: 16px 20px; 
+      background: rgba(0,0,0,0.2); 
+      border-top: 1px solid rgba(231,196,106,0.3); 
+      border-bottom: 1px solid rgba(231,196,106,0.1); 
+      border-radius: 12px;
+      backdrop-filter: blur(2px); 
+    }
+    
     .eventName{ font-family: "Fraunces", serif; font-size: 20px; color: var(--gold); margin-bottom: 4px; }
-    .eventMeta{ font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(238,242,255,0.9); line-height: 1.5; }
+    .eventMeta{ font-family: 'DM Sans', sans-serif; font-size: 14px; color: rgba(238,242,255,0.95); line-height: 1.5; font-weight: 500; }
 
     .cta{
       display:inline-flex; padding: 18px 42px; border-radius: 999px; text-decoration:none;
@@ -107,7 +113,7 @@
     @keyframes pulseBtn { 0%, 100% { box-shadow: 0 0 30px rgba(231,196,106,0.4); } 50% { box-shadow: 0 0 50px rgba(231,196,106,0.7); } }
 
     .countdown{ display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-    .countdown div{ text-align:center; width: 60px; height: 65px; display: flex; flex-direction: column; justify-content: center; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(5px); }
+    .countdown div{ text-align:center; width: 60px; height: 65px; display: flex; flex-direction: column; justify-content: center; border-radius: 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
     .countdown span{ font-size: 24px; color: #fff; font-weight: 600; font-family: 'DM Sans', sans-serif; line-height: 1; margin-bottom: 4px; }
     .countdown small{ font-size: 9px; letter-spacing:1px; color: var(--gold); text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
     
@@ -117,31 +123,31 @@
 
     .wrap2{ max-width: 800px; margin: 0 auto; padding: 0 20px 100px; }
     
-    /* --- UPDATED FOR BETTER READABILITY --- */
+    /* KEY CHANGE: Transparent Form Shell */
     .formShell{
-      /* Darker and more opaque background */
-      background: rgba(5, 8, 20, 0.95);
+      /* Very transparent dark glass so you can see the palace */
+      background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(231,196,106,0.25);
       border-radius: 24px;
       padding: 40px 30px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.9);
-      /* Stronger blur */
-      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      /* Minimal blur to keep details visible */
+      backdrop-filter: blur(5px);
     }
 
-    .formTitle{ font-family:"Fraunces", serif; font-size: 32px; color: #fff; margin-bottom: 10px; text-align: center; }
-    .formSub{ text-align: center; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.7); margin-bottom: 30px; font-size: 14px; }
-    .input{ width:100%; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; outline:none; font-size: 16px; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
-    .input:focus{ border-color: var(--gold); background: rgba(255,255,255,0.1); }
-    .label{ position:absolute;left:16px;top:18px; font-size:14px; color: rgba(255,255,255,0.6); pointer-events:none; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
+    .formTitle{ font-family:"Fraunces", serif; font-size: 32px; color: #fff; margin-bottom: 10px; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .formSub{ text-align: center; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.8); margin-bottom: 30px; font-size: 14px; }
+    .input{ width:100%; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); color: #fff; outline:none; font-size: 16px; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
+    .input:focus{ border-color: var(--gold); background: rgba(255,255,255,0.2); }
+    .label{ position:absolute;left:16px;top:18px; font-size:14px; color: rgba(255,255,255,0.7); pointer-events:none; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; }
     .input:focus + .label, .input:not(:placeholder-shown) + .label{ transform: translateY(-26px); font-size: 12px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
     textarea.input{min-height:120px;resize:vertical}
     .field{position:relative;margin-bottom:20px}
     .submitBtn{ width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--gold); color: #050814; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; cursor:pointer; margin-top: 20px; font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 20px rgba(231,196,106,0.25); }
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .q{ margin: 25px 0 12px; font-size: 12px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 600; }
+    .q{ margin: 25px 0 12px; font-size: 12px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
     .opts{ display:flex; gap: 10px; flex-wrap: wrap; }
-    .chip{ padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; cursor:pointer; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
+    .chip{ padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); cursor:pointer; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
     .chip:hover{ background: rgba(255,255,255,0.1); }
     .chip input { accent-color: var(--gold); width: 16px; height: 16px; }
     .msg{display:none;margin-top:15px;text-align: center; font-family: 'DM Sans', sans-serif;} .msg.ok{color:#4ade80} .msg.bad{color:#f87171}
