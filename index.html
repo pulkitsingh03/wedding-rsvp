@@ -248,9 +248,16 @@
   </section>
 
 <script>
-  // 1. LOADER LOGIC
+ // 1. LOADER LOGIC & FORCE SCROLL TOP
+  if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual'; // Tells browser not to remember scroll position
+  }
+
   window.addEventListener('load', () => {
-    // Fill the progress line, then fade out
+    // Force jump to top immediately
+    window.scrollTo(0, 0);
+
+    // Existing loader animation
     document.getElementById('loader-progress').style.width = '100%';
     setTimeout(() => {
       document.body.classList.add('loaded');
