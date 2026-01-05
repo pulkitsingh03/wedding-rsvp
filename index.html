@@ -276,4 +276,218 @@
   <div class="parallax-bg" id="bgLayer"></div>
 
   <div class="firefly" style="top: 20%; left: 10%; animation-duration: 8s;"></div>
-  <div class="firefly" style="top: 40%; left: 80%; animation-duration: 1
+  <div class="firefly" style="top: 40%; left: 80%; animation-duration: 12s;"></div>
+  <div class="firefly" style="top: 70%; left: 30%; animation-duration: 15s;"></div>
+  <div class="firefly" style="top: 10%; left: 60%; animation-duration: 9s;"></div>
+
+  <section class="hero" id="top">
+    
+    <div class="countdown reveal">
+      <div><span id="d">00</span><small>DAYS</small></div>
+      <div><span id="h">00</span><small>HRS</small></div>
+      <div><span id="m">00</span><small>MINS</small></div>
+      <div><span id="s">00</span><small>SECS</small></div>
+    </div>
+
+    <div class="heroText reveal">
+      <div class="eyebrow">The wedding celebration of</div>
+      <h1>Pulkit <span>&</span> Sakshi</h1>
+
+      <div class="event-grid">
+        <div class="event">
+          <div class="eventName">Engagement</div>
+          <div class="eventMeta">20 Feb · 11:00 AM · Shaurya Banquet</div>
+        </div>
+
+        <div class="event">
+          <div class="eventName">Haldi &amp; Sangeet</div>
+          <div class="eventMeta">21 Feb · 4:00 PM · Club Cascade</div>
+        </div>
+
+        <div class="event">
+          <div class="eventName">Wedding</div>
+          <div class="eventMeta">22 Feb · 5:00 PM · Mallu Farms</div>
+        </div>
+      </div>
+
+      <a href="#rsvp" class="cta">RSVP Now</a>
+    </div>
+  </section>
+
+  <div class="sep reveal">
+    <div class="line"></div>
+    <div class="txt">KINDLY REPLY</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="wrap2">
+    <section class="formShell reveal" id="rsvp">
+      <div class="formTitle">RSVP</div>
+      <div class="formSub">
+        We can't wait to celebrate with you. Please let us know your plans.
+      </div>
+      
+      <form id="rsvpForm">
+
+        <div class="field">
+          <input class="input" id="name" name="name" type="text" placeholder=" " required />
+          <div class="label">Full Name <span style="color:red">*</span></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <input class="input" id="email" name="email" type="email" placeholder=" " />
+            <div class="label">Email</div>
+          </div>
+          <div class="field">
+            <input class="input" id="phone" name="phone" type="tel" placeholder=" " />
+            <div class="label">Phone</div>
+          </div>
+        </div>
+
+        <div class="q">Will you be attending?</div>
+        <div class="opts">
+          <label class="chip"><input type="radio" name="attendance_overall" value="Yes" required />Yes</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="Maybe" />Maybe</label>
+          <label class="chip"><input type="radio" name="attendance_overall" value="No" />No</label>
+        </div>
+
+        <div class="q">Which events?</div>
+        <div class="opts">
+          <label class="chip"><input type="checkbox" name="events_engagement" value="Engagement" />Engagement</label>
+          <label class="chip"><input type="checkbox" name="events_haldi_sangeet" value="Haldi & Sangeet" />Haldi/Sangeet</label>
+          <label class="chip"><input type="checkbox" name="events_wedding" value="Wedding" />Wedding</label>
+        </div>
+
+        <div class="q">Bringing a plus one?</div>
+        <div class="opts">
+          <label class="chip"><input type="radio" name="plus_one" value="No" required />No</label>
+          <label class="chip"><input type="radio" name="plus_one" value="Yes" />Yes</label>
+        </div>
+
+        <div class="field" id="plusOneBlock" style="display:none; margin-top:15px;">
+          <input class="input" id="plus_one_name" name="plus_one_name" type="text" placeholder=" " />
+          <div class="label">Plus One Name</div>
+        </div>
+
+        <div class="field" style="margin-top:20px;">
+          <textarea class="input" id="notes" name="notes" placeholder=" "></textarea>
+          <div class="label">Dietary Restrictions / Messages</div>
+        </div>
+
+        <button class="submitBtn" type="submit">Confirm Attendance</button>
+        <div id="formMsg" class="msg"></div>
+        
+        <div class="footer">Pulkit &amp; Sakshi · 2026</div>
+      </form>
+    </section>
+  </div>
+
+<script>
+  // 1. DYNAMIC PARALLAX SCRIPT (This makes the image move!)
+  const bg = document.getElementById('bgLayer');
+  window.addEventListener('scroll', () => {
+    // Only animate on larger screens to save mobile battery
+    // Calculate how far we've scrolled
+    const scroll = window.scrollY;
+    // Move the background UP slowly (0.3 speed) as we scroll down
+    bg.style.transform = `translateY(-${scroll * 0.2}px)`;
+  });
+
+  // 2. SCROLL REVEAL ANIMATIONS
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // 3. COUNTDOWN
+  (function () {
+    const target = new Date(2026, 1, 20, 11, 0, 0); 
+    const dEl = document.getElementById('d'), hEl = document.getElementById('h'), mEl = document.getElementById('m'), sEl = document.getElementById('s');
+    const pad2 = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+      if (diff < 0) diff = 0;
+      const total = Math.floor(diff / 1000);
+      dEl.textContent = String(Math.floor(total / 86400));
+      hEl.textContent = pad2(Math.floor((total % 86400) / 3600));
+      mEl.textContent = pad2(Math.floor((total % 3600) / 60));
+      sEl.textContent = pad2(total % 60);
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
+  // 4. FORM LOGIC
+  const form = document.getElementById('rsvpForm');
+  const msg = document.getElementById('formMsg');
+  const plusOneRadios = document.querySelectorAll('input[name="plus_one"]');
+  const plusOneBlock = document.getElementById('plusOneBlock');
+  const plusOneName = document.getElementById('plus_one_name');
+
+  plusOneRadios.forEach(r => {
+    r.addEventListener('change', () => {
+      if (r.checked && r.value === 'Yes') {
+        plusOneBlock.style.display = 'block';
+        plusOneName.required = true;
+      } else if (r.checked && r.value === 'No') {
+        plusOneBlock.style.display = 'none';
+        plusOneName.required = false;
+      }
+    });
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.submitBtn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    // VALIDATION
+    const ev1 = form.querySelector('input[name="events_engagement"]').checked;
+    const ev2 = form.querySelector('input[name="events_haldi_sangeet"]').checked;
+    const ev3 = form.querySelector('input[name="events_wedding"]').checked;
+    const overall = form.querySelector('input[name="attendance_overall"]:checked').value;
+
+    if (overall === 'Yes' && !ev1 && !ev2 && !ev3) {
+      msg.textContent = 'Please select at least one event.';
+      msg.className = 'msg bad';
+      msg.style.display = 'block';
+      btn.textContent = originalText;
+      btn.disabled = false;
+      return;
+    }
+
+    const fd = new FormData(form);
+    const payload = {};
+    fd.forEach((value, key) => payload[key] = value.toString().trim());
+    payload.events_engagement = ev1 ? 'Yes' : 'No';
+    payload.events_haldi_sangeet = ev2 ? 'Yes' : 'No';
+    payload.events_wedding = ev3 ? 'Yes' : 'No';
+
+    try {
+      const res = await fetch('YOUR_WEB_APP_URL_HERE', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      msg.textContent = 'Thank you! Your RSVP has been received.';
+      msg.className = 'msg ok';
+      msg.style.display = 'block';
+      form.reset();
+      plusOneBlock.style.display = 'none';
+    } catch (err) {
+      msg.textContent = 'Error submitting. Please try again.';
+      msg.className = 'msg bad';
+      msg.style.display = 'block';
+    }
+    btn.textContent = 'Sent';
+  });
+</script>
+</body>
+</html>
