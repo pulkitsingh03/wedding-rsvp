@@ -16,36 +16,76 @@
       font-family: Georgia, serif;
       background-color: var(--bg-blend);
       overflow-x: hidden;
-      /* Hide scrollbar until loader finishes */
-      overflow-y: hidden; 
+      overflow-y: hidden; /* Lock scroll until loaded */
     }
 
-    /* === 1. PRE-LOADER (Cinematic Entrance) === */
+    /* === 1. THE ROYAL LOADER (UPDATED) === */
     #loader {
       position: fixed;
       inset: 0;
-      background: #050814;
+      /* Deep radial gradient matching the site theme */
+      background: radial-gradient(circle at center, #1a233a 0%, #050814 100%);
       z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      transition: opacity 1s ease, visibility 1s ease;
+      transition: opacity 1.2s ease-in-out, visibility 1.2s ease;
     }
+
+    .loader-content {
+      position: relative;
+      text-align: center;
+    }
+
     .loader-text {
       font-family: "Fraunces", serif;
-      font-size: 40px;
-      color: var(--gold);
-      letter-spacing: 5px;
-      animation: pulse 2s infinite;
+      font-size: 48px;
+      letter-spacing: 4px;
+      font-weight: 300;
+      margin-bottom: 24px;
+      
+      /* THE GOLD SHIMMER EFFECT */
+      background: linear-gradient(to right, #aa771c 0%, #fff0b6 50%, #aa771c 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
     }
+
+    /* Elegant thin line with faded edges */
+    .loader-line-container {
+      width: 200px;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
     .loader-line {
       width: 0%;
-      height: 2px;
-      background: var(--gold);
-      margin-top: 20px;
-      transition: width 0.5s ease;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #E7C46A, transparent);
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: width 0.5s ease-out;
     }
+    
+    .loader-caption {
+      margin-top: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes shimmer { to { background-position: 200% center; } }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
     body.loaded #loader { opacity: 0; visibility: hidden; pointer-events: none; }
     body.loaded { overflow-y: auto; }
 
@@ -56,7 +96,6 @@
       /* Make sure this image is in your assets folder! */
       background-image: url('assets/invite-bg-wide.jpg');
       background-size: cover; background-position: center top; background-repeat: no-repeat;
-      /* Dim the image so text pops */
       filter: brightness(0.65) contrast(1.1);
       will-change: transform, background-position;
       transition: background-position 0.1s linear, transform 0.1s linear;
@@ -73,19 +112,16 @@
       100% { transform: translate(100px, -200px) scale(0); opacity: 0; }
     }
 
-    /* === TYPOGRAPHY UPGRADE (Gold Gradient) === */
+    /* === TYPOGRAPHY === */
     h1 {
       font-size: clamp(60px, 12vw, 120px); margin: 0;
       font-family: "Fraunces", serif; font-weight: 300; line-height: 1.1;
       color: #fff; text-shadow: 0 4px 30px rgba(0,0,0,0.5);
     }
-    /* The Metallic Effect */
     h1 span { 
       background: linear-gradient(to bottom, #F9E59E 0%, #E7C46A 50%, #B98A2A 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-style: italic; 
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; font-style: italic; 
     }
 
     section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; position: relative; z-index: 1; }
@@ -143,8 +179,13 @@
 <body>
   
   <div id="loader">
-    <div class="loader-text">P & S</div>
-    <div class="loader-line" id="loader-progress"></div>
+    <div class="loader-content">
+      <div class="loader-text">P & S</div>
+      <div class="loader-line-container">
+        <div class="loader-line" id="loader-progress"></div>
+      </div>
+      <div class="loader-caption">Loading The Celebration</div>
+    </div>
   </div>
 
   <div id="dynamic-bg"></div>
@@ -175,7 +216,7 @@
           <div class="ev-name">Engagement</div>
           <div class="ev-time">Feb 20 · 11:00 AM</div>
           <div class="ev-loc">Shaurya Banquet Hall, Sector 73, Noida</div>
-          <a href="https://www.google.com/maps/search/?api=1&query=Shaurya+Banquet+Hall+Sector+73+Noida" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
@@ -185,7 +226,7 @@
           <div class="ev-name">Haldi & Sangeet</div>
           <div class="ev-time">Feb 21 · 4:00 PM</div>
           <div class="ev-loc">Club Cascade Banquet, Cleo County, Noida</div>
-          <a href="https://www.google.com/maps/search/?api=1&query=Club+Cascade+Banquet+Cleo+County+Noida" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
@@ -195,7 +236,7 @@
           <div class="ev-name">The Wedding</div>
           <div class="ev-time">Feb 22 · 5:00 PM</div>
           <div class="ev-loc">Mallu Farms, Chattarpur, Delhi</div>
-          <a href="https://www.google.com/maps/search/?api=1&query=Mallu+Farms+Chattarpur+Delhi" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
@@ -248,20 +289,21 @@
   </section>
 
 <script>
- // 1. LOADER LOGIC & FORCE SCROLL TOP
+  // 1. LOADER LOGIC & FORCE SCROLL TOP
   if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual'; // Tells browser not to remember scroll position
+    history.scrollRestoration = 'manual';
   }
 
   window.addEventListener('load', () => {
-    // Force jump to top immediately
     window.scrollTo(0, 0);
 
-    // Existing loader animation
+    // Fill the progress line
     document.getElementById('loader-progress').style.width = '100%';
+    
+    // Slight delay before fading out to enjoy the shimmer
     setTimeout(() => {
       document.body.classList.add('loaded');
-    }, 800);
+    }, 1200);
   });
 
   // 2. FIREFLIES
@@ -323,7 +365,7 @@
     btn.textContent = 'Sending...';
     
     // !!! PASTE YOUR GOOGLE SCRIPT URL HERE !!!
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx_ddSbF8XguT4PFhCvXONDpT34iv21tleEjB5iAUXMcjiC6j75lYUDII0AqhkP78Md/exec';
+    const scriptURL = 'YOUR_WEB_APP_URL_HERE';
     
     try {
       const fd = new FormData(form);
