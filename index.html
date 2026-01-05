@@ -346,6 +346,34 @@
       .wrap2{ padding: 0 12px 60px !important; }
       .formShell{ padding: 22px 14px 24px !important; border-radius: 20px !important; }
     }
+  /* MODERN SCROLL REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px); /* Push it down slightly */
+  transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); /* "Apple-style" smooth ease */
+  filter: blur(5px); /* Start slightly blurry */
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Make the whole page scroll "heavier" and smoother */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle pulse on the RSVP button to make it feel "alive" */
+.cta {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0px); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+  50% { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(231,196,106,.4); }
+  100% { transform: translateY(0px); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+}
   </style>
 </head>
 
@@ -360,7 +388,7 @@
     <div><span id="s">00</span><small>SECS</small></div>
   </div>
 
-  <div class="heroText">
+  <div class="heroText reveal">
     <div class="eyebrow">The wedding celebration of</div>
     <h1>Pulkit <span>&</span> Sakshi</h1>
 
@@ -390,14 +418,14 @@
 </section>
 
 
-  <div class="sep">
+  <div class="sep reveal">
     <div class="line"></div>
     <div class="txt">RSVP FORM</div>
     <div class="line"></div>
   </div>
 
   <div class="wrap2">
-    <section class="formShell">
+    <section class="formShell reveal">
       <div class="formTitle">RSVP</div>
       <div class="formSub">
         Select which events you can make it to, add plus one details if needed, and submit.
@@ -472,7 +500,26 @@
     </section>
     </section>
   </div>
+  <script>
+  // Modern Scroll Observer
+  const observerOptions = {
+    threshold: 0.15, // Trigger when 15% of the item is visible
+    rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the bottom
+  };
 
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        // Optional: Stop watching once revealed (better performance)
+        observer.unobserve(entry.target); 
+      }
+    });
+  }, observerOptions);
+
+  // Attach observer to all elements with class "reveal"
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
   <script>
   // Countdown (Engagement start: 20 Feb 2026, 11:00)
   (function () {
