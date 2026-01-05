@@ -438,67 +438,65 @@
   position: relative;
   z-index:2;
 }
-/* Mobile fixes: stop overflow + make layout fit */
-html, body{
-  overflow-x: hidden;
-}
+/* ===== MOBILE OVERRIDES (must be last) ===== */
+@media screen and (max-width: 900px){
 
-/* Phone layout */
-@media (max-width: 600px){
+  html, body { overflow-x: hidden !important; }
 
-  /* Keep hero content visible */
   .hero{
-    padding: 24px 14px 56px;
+    padding: 24px 14px 56px !important;
+    min-height: 100svh !important; /* better on mobile address bar */
   }
 
   .heroText{
-    max-width: 92vw;
-    margin: 70px auto 0;     /* was 140px */
+    max-width: 92vw !important;
+    margin: 86px auto 0 !important; /* reduce from 140px */
+    padding: 0 6px !important;
   }
 
   .heroText h1{
-    font-size: clamp(34px, 10vw, 48px);
-    margin: 0 0 16px;
+    font-size: clamp(34px, 10vw, 48px) !important;
+    margin: 0 0 16px !important;
   }
 
-  .event{ margin: 14px 0; font-size: 14px; }
-  .eventName{ font-size: 16px; }
-  .eventMeta{ font-size: 13px; }
+  .event{ margin: 14px 0 !important; font-size: 14px !important; }
+  .eventName{ font-size: 16px !important; }
+  .eventMeta{ font-size: 13px !important; }
 
-  /* Countdown: prevent horizontal overflow */
+  /* Your current countdown has position: relative !important.
+     Override it with stronger !important rules. */
   .countdown{
     position: fixed !important;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);   /* remove scale */
-    width: calc(100vw - 20px);     /* clamp to viewport */
-    justify-content: center;
-    flex-wrap: wrap;               /* allow wrap if needed */
-    gap: 8px;
-    z-index: 999999;
+    top: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* kill scale */
+    width: calc(100vw - 20px) !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
   }
 
   .countdown div{
-    padding: 7px 9px;
+    padding: 7px 9px !important;
   }
 
   .countdown span{
-    font-size: 16px;               /* was 25 */
+    font-size: 16px !important;
   }
 
   .countdown small{
-    font-size: 9px;                /* was 15 */
+    font-size: 9px !important;
   }
 
-  /* Leave space so timer doesn’t cover content */
-  .hero{
-    padding-top: 88px;
-  }
+  /* create space so the fixed timer doesn't cover hero content */
+  .hero{ padding-top: 92px !important; }
 
-  /* RSVP container fits */
-  .wrap2{ padding: 0 10px 44px; }
-  .formShell{ padding: 18px 12px 20px; border-radius: 20px; }
+  .wrap2{ padding: 0 10px 44px !important; }
+  .formShell{ padding: 18px 12px 20px !important; border-radius: 20px !important; }
 }
+
 
   </style>
 </head>
