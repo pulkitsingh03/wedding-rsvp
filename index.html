@@ -141,6 +141,35 @@
       20% { opacity: 0.8; } 80% { opacity: 0.6; }
       100% { transform: translate(100px, -200px) scale(0); opacity: 0; }
     }
+    
+    /* === DRESS CODE SWATCHES === */
+    .dress-code {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255,255,255,0.1); /* Subtle divider */
+    }
+    .dc-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.5);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dc-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3); /* Border makes dark colors visible */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
     /* === TYPOGRAPHY === */
     h1 {
@@ -247,9 +276,9 @@
         
         <div class="event-card">
           <div class="ev-name">Engagement</div>
-          <div class="ev-time">Feb 20 · 11:00 AM Onwards</div>
+          <div class="ev-time">Feb 20 · 11:00 AM</div>
           <div class="ev-loc">Shaurya Banquet Hall, Sector 73, Noida</div>
-          <a href="https://maps.app.goo.gl/5muZaSMhDTt3eYzM6" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
@@ -257,22 +286,43 @@
 
         <div class="event-card">
           <div class="ev-name">Haldi & Sangeet</div>
-          <div class="ev-time">Feb 21 · 4:00 PM Onwards</div>
+          <div class="ev-time">Feb 21 · 4:00 PM</div>
           <div class="ev-loc">Club Cascade Banquet, Cleo County, Noida</div>
-          <a href="https://maps.app.goo.gl/C9b9jpUdM1m1xzVY7" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
+          
+          <div class="dress-code">
+            <span class="dc-label">Dress Code: Pastels</span>
+            <div class="dc-dots">
+              <span class="color-dot" style="background:#E6E6FA" title="Purple"></span>
+              <span class="color-dot" style="background:#FFDAB9" title="Peach"></span>
+              <span class="color-dot" style="background:#98FB98" title="Green"></span>
+              <span class="color-dot" style="background:#87CEFA" title="Blue"></span>
+              <span class="color-dot" style="background:#FFDEAD" title="Orange"></span>
+            </div>
+          </div>
         </div>
 
         <div class="event-card">
           <div class="ev-name">The Wedding</div>
-          <div class="ev-time">Feb 22 · 5:00 PM - Baraat</div>
+          <div class="ev-time">Feb 22 · 5:00 PM</div>
           <div class="ev-loc">Mallu Farms, Chattarpur, Delhi</div>
-          <a href="https://maps.app.goo.gl/5beZgejVtoyD7y9Y9" target="_blank" class="map-link">
+          <a href="https://goo.gl/maps/YOUR_LINK_HERE" target="_blank" class="map-link">
             <svg class="map-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             View Map
           </a>
+
+          <div class="dress-code">
+            <span class="dc-label">Dress Code: Dark & Royal</span>
+            <div class="dc-dots">
+              <span class="color-dot" style="background:#000080" title="Dark Blue"></span>
+              <span class="color-dot" style="background:#000000" title="Black"></span>
+              <span class="color-dot" style="background:#8B0000" title="Deep Red"></span>
+              <span class="color-dot" style="background:#2F4F4F" title="Dark Slate"></span>
+            </div>
+          </div>
         </div>
 
       </div>
